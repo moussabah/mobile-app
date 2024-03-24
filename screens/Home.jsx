@@ -13,7 +13,7 @@ export default function Home({navigation}) {
     <View style={styles.container}>
       <Button
           onPress={onPressLearnMore}
-          title="Learn More"
+          title="Formulaire"
           color="#00f"
           accessibilityLabel="Learn more about this purple button"
       />
