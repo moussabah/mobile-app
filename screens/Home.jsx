@@ -5,7 +5,7 @@ export default function Home({navigation}) {
   
   
     const onPressLearnMore = () => {
-        navigation.navigate('Form')
+        navigation.navigate('EventScreen')
     }
   
   
