@@ -1,10 +1,15 @@
 import React from 'react';
-import {Text} from "react-native";
+import {Text, FlatList} from "react-native";
 import EventCard from "../components/EventCard";
 
 function EventScreen({navigation}) {
     return (
-        <EventCard></EventCard>
+        <FlatList data={[{id: 1}, {id: 2}, {id: 1}, {id: 2}, ]}
+            keyExtractor={(item, index) => item + index}
+            renderItem={({item}) => (
+                <EventCard/>
+            )}
+        />
     );
 }
 
