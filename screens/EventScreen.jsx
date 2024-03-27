@@ -7,7 +7,7 @@ function EventScreen({navigation}) {
         <FlatList data={[{id: 1}, {id: 2}, {id: 1}, {id: 2}, ]}
             keyExtractor={(item, index) => item + index}
             renderItem={({item}) => (
-                <EventCard/>
+                <EventCard event={item} navigation={navigation}/>
             )}
         />
     );

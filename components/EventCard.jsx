@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image} from "react-native";
+import {StyleSheet, Text, View, Image, TouchableOpacity} from "react-native";
 import {Styles} from "../assets/styles/Styles";
 
-function EventCard(props) {
+function EventCard({event, navigation}) {
 
     const data = {
         "dates": [
@@ -94,8 +94,12 @@ function EventCard(props) {
         "nb_evenements": 1
     }
 
+    const onPressHandler = () => {
+        navigation.navigate('EventDetail')
+    }
+
     return (
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={onPressHandler}>
             <View>
                 <View></View>
                 <View>
@@ -110,7 +114,7 @@ function EventCard(props) {
                     <Text>{data.description_longue_fr}</Text>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 }
 
