@@ -8,10 +8,11 @@ function EventDetail({route, navigation}) {
     return (
         <View style={styles.body}>
             <View>
-                <Image resizeMode={"contain"} source={{uri: event.image}} height={200}/>
+                <Image resizeMode={"contain"} source={{uri: event.image}} height={250}/>
             </View>
             <View>
                 <Text style={styles.title}>{event.titre_fr}</Text>
+                <Text style={styles.date}>{event.resume_horaires_fr}</Text>
             </View>
             <View style={styles.description}>
                 <HtmlView value={event.description_longue_html_fr} />
@@ -33,6 +34,9 @@ const styles = StyleSheet.create({
     },
     description:{
         marginTop: 15,
+    },
+    date:{
+        fontSize: 12,
     }
 })
 
