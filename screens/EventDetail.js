@@ -1,6 +1,5 @@
 import React from 'react';
 import {Image, Text, View, StyleSheet} from "react-native";
-import {WebView} from "react-native-webview";
 import HtmlView from "react-native-htmlview";
 
 function EventDetail({route, navigation}) {
@@ -29,7 +28,8 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        marginTop: 15,
     },
     description:{
         marginTop: 15,
