@@ -11,4 +11,16 @@ export const Styles = StyleSheet.create({
     p2:{
         padding: 10,
     },
+    input: {
+        borderWidth: 1,
+        borderColor: "#afafaf",
+        borderRadius: 10,
+        backgroundColor: "rgba(255,255,255,0.75)",
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        fontSize: 20,
+    },
+    container:{
+        paddingHorizontal: 5,
+    }
 })

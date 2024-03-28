@@ -1,6 +1,8 @@
 import React, {useMemo} from 'react';
-import {Text, FlatList} from "react-native";
+import {Text, FlatList, View, TextInput, StyleSheet} from "react-native";
 import EventCard from "../components/EventCard";
+import {Styles} from "../assets/styles/Styles";
+
 function EventScreen({navigation}) {
 
     const data = useMemo(() => {
@@ -13,13 +15,22 @@ function EventScreen({navigation}) {
     }, [])
 
     return (
-        <FlatList data={data}
-            keyExtractor={(item, index) => item + index}
-            renderItem={({item}) => (
-                <EventCard event={item} navigation={navigation}/>
-            )}
-        />
+        <View style={Styles.container}>
+            <TextInput style={{...Styles.input, ...eventStyles.input}} placeholder={"Recherche"}/>
+            <FlatList data={data}
+                      keyExtractor={(item, index) => item + index}
+                      renderItem={({item}) => (
+                          <EventCard event={item} navigation={navigation}/>
+                      )}
+            />
+        </View>
     );
 }
+
+const eventStyles = StyleSheet.create({
+    input: {
+        marginTop: 5,
+    }
+})
 
 export default EventScreen;

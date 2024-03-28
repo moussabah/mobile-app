@@ -103,12 +103,9 @@ function EventCard({event, navigation}) {
     return (
         <TouchableOpacity style={styles.container} onPress={onPressHandler}>
             <View>
-                <View></View>
-                <View>
-                    <Image source={{uri: data.image}} style={styles.image}/>
-                </View>
+                <Image source={{uri: data.image}} style={styles.image}/>
             </View>
-            <View style={Styles.border}>
+            <View>
                 <View>
                     <Text style={styles.title}>{data.titre_fr}</Text>
                 </View>
@@ -122,9 +119,10 @@ function EventCard({event, navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 5,
-        borderWidth: 2,
-        marginHorizontal: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        borderColor: "#bdbcbc",
+        elevation: 3,
         marginVertical: 4,
         flex: 1,
     },
