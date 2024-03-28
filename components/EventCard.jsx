@@ -95,7 +95,9 @@ function EventCard({event, navigation}) {
     }
 
     const onPressHandler = () => {
-        navigation.navigate('EventDetail')
+        navigation.navigate('EventDetail', {
+            event: data
+        })
     }
 
     return (
