@@ -3,11 +3,20 @@ import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 function Tag(props) {
     return (
-        <TouchableOpacity style={tagStyles.tag}>
+        <TouchableOpacity style={getStylesIfActive(props.active)} onPress={props.onPress}>
             <Text style={tagStyles.text}>{props.name}</Text>
         </TouchableOpacity>
     );
+
+    function getStylesIfActive (active) {
+        return !active ? tagStyles.tag : {
+            ...tagStyles.tag,
+            ...tagStyles.active,
+        }
+    }
 }
+
+
 
 
 const tagStyles = StyleSheet.create({
@@ -24,6 +33,9 @@ const tagStyles = StyleSheet.create({
     },
     text: {
         fontSize: 20,
+    },
+    active: {
+        backgroundColor: "red",
     }
 })
 
