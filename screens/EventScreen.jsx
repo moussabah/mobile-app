@@ -20,10 +20,10 @@ function EventScreen({navigation}) {
             <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={eventStyles.tagContainer}>
                 <Tag name={"Informatique"}/>
                 <Tag name={"Science"}/>
-                <Tag name={"Hackathon"}/>
-                <Tag name={"Hackathon"}/>
-                <Tag name={"Hackathon"}/>
-                <Tag name={"Hackathon"}/>
+                <Tag name={"Programmation"}/>
+                <Tag name={"IA"}/>
+                <Tag name={"École"}/>
+                <Tag name={"Business"}/>
             </ScrollView>
             <FlatList data={data}
                       keyExtractor={(item, index) => item + index}
