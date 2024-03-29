@@ -22,5 +22,8 @@ export const Styles = StyleSheet.create({
     },
     container:{
         paddingHorizontal: 5,
+        flex: 1,
+        flexDirection: "column",
+        alignContent:"space-around",
     }
 })
