@@ -1,33 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import Form from "./Form";
+import EventDetail from "./EventDetail";
+import EventScreen from "./EventScreen";
 
+const Stack = createNativeStackNavigator();
 export default function Home({navigation}) {
-  
-  
-    const onPressLearnMore = () => {
-        navigation.navigate('EventScreen')
-    }
-  
-  
+
     return (
-    <View style={styles.container}>
-      <Button
-          onPress={onPressLearnMore}
-          title="Formulaire"
-          color="#00f"
-          accessibilityLabel="Learn more about this purple button"
-      />
-      <StatusBar style="auto" />
-    </View>
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen name="EventScreen" component={EventScreen} options={{title: 'Liste des événements'}} />
+                <Stack.Screen name="EventDetail" component={EventDetail} options={{title: 'Description'}} />
+            </Stack.Navigator>
+        </NavigationContainer>
   )
 }
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
   

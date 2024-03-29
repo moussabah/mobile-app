@@ -1,21 +1,36 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from './screens/Home';
-import Form from './screens/Form';
-import { NavigationContainer } from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {NavigationContainer} from '@react-navigation/native';
 import EventScreen from "./screens/EventScreen";
-import EventDetail from "./screens/EventDetail";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import FilterScreen from "./screens/FilterScreen";
 
 
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-          <Stack.Screen name="EventScreen" component={EventScreen} options={{title: 'Liste des événements'}} />
-          <Stack.Screen name="Form" component={Form} />
-        <Stack.Screen name="EventDetail" component={EventDetail} options={{title: 'Description'}} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+    return (
+        <NavigationContainer>
+            <Tab.Navigator
+                screenOptions={{
+                    tabBarActiveTintColor: '#e91e63',
+                }}
+            >
+                <Tab.Screen name="EventScreen" component={EventScreen} options={
+                    {
+                        title: 'Liste des événements',
+                        tabBarLabel: "Evenements",
+                        tabBarIcon: ({color, size}) => (
+                            <MaterialCommunityIcons name="calendar" color={color} size={size}/>
+                        ),
+                    }
+                }/>
+                <Tab.Screen name="EventDetail" component={FilterScreen} options={{
+                    title: 'Filtre', tabBarLabel: "Filtre",
+                    tabBarIcon: ({color, size}) => (
+                        <MaterialCommunityIcons name="tune" color={color} size={size}/>
+                    ),
+                }}/>
+            </Tab.Navigator>
+        </NavigationContainer>
+    );
 }
