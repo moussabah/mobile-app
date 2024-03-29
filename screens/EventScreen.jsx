@@ -47,9 +47,6 @@ function EventScreen({navigation}) {
 }
 
 const eventStyles = StyleSheet.create({
-    input: {
-        marginTop: 5,
-    },
     tagContainer: {
         marginTop: 5,
         paddingTop:1,
