@@ -14,15 +14,20 @@ function FilterScreen({navigation}) {
         navigation.navigate("EventScreen")
     }
 
+    function Label(props){
+        return <Text  style={{...filterStyle.label, marginTop: 12, ...props.style}}>{props.name}</Text>
+    }
+
     return (
         <ScrollView style={Styles.container}>
-            <Text style={filterStyle.label}>Mots clés:</Text>
+
+            <Label name="Mot clés:" />
             <CustomInput placeholder={"Ex: Danse, Voyage, Fête"} />
-            <Text style={{...filterStyle.label, paddingTop: 12,}}>Thème:</Text>
+            <Label name="Thème:" />
             <CustomInput placeholder={"Ex: Conférence"}/>
-            <Text style={{...filterStyle.label, paddingTop: 12,}}>Lieu:</Text>
+            <Label name="Lieu:" />
             <CustomInput placeholder={"Ex: Rennes"} />
-            <Text style={{...filterStyle.label, paddingTop: 12,}}>Date:</Text>
+            <Label name="Date:" />
             <CustomInput placeholder={"DD/MM/YYYY"}/>
             <View style={{paddingHorizontal: 40, paddingVertical: 20}}>
                 <Button title={"Rechercher"} onPress={onFilter}/>
