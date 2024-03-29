@@ -11,7 +11,12 @@ function FilterScreen({navigation}) {
     const [date, setDate] = useState("");
 
     const onFilter = () => {
-        navigation.navigate("EventScreen")
+        navigation.navigate("EventScreen", {
+            keyword,
+            theme,
+            location,
+            date,
+        })
     }
 
     function Label(props){

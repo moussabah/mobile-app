@@ -5,8 +5,8 @@ import {Styles} from "../assets/styles/Styles";
 import Tag from "../components/Tag";
 import tag from "../components/Tag";
 
-function EventScreen({navigation}) {
-
+function EventScreen({route, navigation}) {
+    const params = route.params;
     const tags = ["Tout", "Informatique", "Science", "Programmation", "IA", "École", "Business"]
     const [activeTag, setActiveTag] = useState(null);
 
