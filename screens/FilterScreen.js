@@ -27,13 +27,13 @@ function FilterScreen({navigation}) {
         <ScrollView style={Styles.container}>
 
             <Label name="Mot clés:" />
-            <CustomInput placeholder={"Ex: Danse, Voyage, Fête"} />
+            <CustomInput placeholder={"Ex: Danse, Voyage, Fête"} onChange={(value) => setKeyword(value)}/>
             <Label name="Thème:" />
-            <CustomInput placeholder={"Ex: Conférence"}/>
+            <CustomInput placeholder={"Ex: Conférence"} onChange={(value) => setTheme(value)}/>
             <Label name="Lieu:" />
-            <CustomInput placeholder={"Ex: Rennes"} />
+            <CustomInput placeholder={"Ex: Rennes"} onChange={(value) => setLocation(value)}/>
             <Label name="Date:" />
-            <CustomInput placeholder={"DD/MM/YYYY"}/>
+            <CustomInput placeholder={"DD/MM/YYYY"} onChange={(value) => setDate(value)}/>
             <View style={{paddingHorizontal: 40, paddingVertical: 20}}>
                 <Button title={"Rechercher"} onPress={onFilter}/>
             </View>

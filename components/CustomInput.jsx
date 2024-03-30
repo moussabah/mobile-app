@@ -4,7 +4,7 @@ import {StyleSheet, TextInput} from "react-native";
 
 function CustomInput(props) {
     return (
-        <TextInput onChange={props.onChange} style={{...Styles.input, ...styles.input, ...props.styles}} placeholder={props.placeholder}/>
+        <TextInput onChangeText={props.onChange} style={{...Styles.input, ...styles.input, ...props.styles}} placeholder={props.placeholder}/>
     );
 }
 
