@@ -3,34 +3,19 @@ import {NavigationContainer} from '@react-navigation/native';
 import EventScreen from "./screens/EventScreen";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import FilterScreen from "./screens/FilterScreen";
+import Home from "./screens/Home";
+import EventDetail from "./screens/EventDetail";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
-
-const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
     return (
         <NavigationContainer>
-            <Tab.Navigator
-                screenOptions={{
-                    tabBarActiveTintColor: '#e91e63',
-                }}
-            >
-                <Tab.Screen name="EventScreen" component={EventScreen} options={
-                    {
-                        title: 'Liste des événements',
-                        tabBarLabel: "Evenements",
-                        tabBarIcon: ({color, size}) => (
-                            <MaterialCommunityIcons name="calendar" color={color} size={size}/>
-                        ),
-                    }
-                }/>
-                <Tab.Screen name="EventDetail" component={FilterScreen} options={{
-                    title: 'Filtre', tabBarLabel: "Filtre",
-                    tabBarIcon: ({color, size}) => (
-                        <MaterialCommunityIcons name="tune" color={color} size={size}/>
-                    ),
-                }}/>
-            </Tab.Navigator>
+            <Stack.Navigator>
+                <Stack.Screen name="Home" component={Home} options={{title: 'Liste des événements', headerShown: false}} />
+                <Stack.Screen name="EventDetail" component={EventDetail} options={{title: 'Description'}} />
+            </Stack.Navigator>
         </NavigationContainer>
     );
 }
