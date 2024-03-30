@@ -1,14 +1,15 @@
 import React, {useMemo, useState} from 'react';
-import {ScrollView, FlatList, View, TextInput, StyleSheet, TouchableOpacity} from "react-native";
+import {ScrollView, FlatList, View, TextInput, StyleSheet} from "react-native";
 import EventCard from "../components/EventCard";
 import {Styles} from "../assets/styles/Styles";
 import Tag from "../components/Tag";
-import tag from "../components/Tag";
-import CustomInput from "../components/CustomInput";
+import FilterService from "../services/FilterService";
 
 function EventScreen({route, navigation}) {
     const params = route.params;
-    console.log(params)
+    if (params !== undefined){
+        FilterService.filterByCriteria([], params);
+    }
     const tags = ["Tout", "Informatique", "Science", "Programmation", "IA", "École", "Business"]
     const [activeTag, setActiveTag] = useState(null);
 
