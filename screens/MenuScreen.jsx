@@ -22,11 +22,11 @@ function MenuScreen({route, navigation}) {
                 </InteractiveCard>
             </View>
             <View style={styles.grid}>
-                <InteractiveCard>
+                <InteractiveCard onPress={() => navigation.navigate("CardScreen")}>
                     <MaterialCommunityIcons name="map" size={65}/>
                     <Text>Carte</Text>
                 </InteractiveCard>
-                <InteractiveCard>
+                <InteractiveCard onPress={() => navigation.navigate("UserEvent")}>
                     <MaterialCommunityIcons name="calendar-plus" size={65}/>
                     <Text>Mes événements</Text>
                 </InteractiveCard>
