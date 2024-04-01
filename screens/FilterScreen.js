@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Button, ScrollView, StyleSheet, Text, View} from "react-native";
 import {Styles} from "../assets/styles/Styles";
 import CustomInput from "../components/CustomInput";
+import {Label} from "../components/Label";
 
 function FilterScreen({navigation}) {
 
@@ -17,10 +18,6 @@ function FilterScreen({navigation}) {
             location,
             date,
         })
-    }
-
-    function Label(props){
-        return <Text  style={{...filterStyle.label, marginTop: 12, ...props.style}}>{props.name}</Text>
     }
 
     return (
@@ -40,12 +37,5 @@ function FilterScreen({navigation}) {
         </ScrollView>
     );
 }
-
-
-const filterStyle = StyleSheet.create({
-    label:{
-        fontSize: 20,
-    }
-})
 
 export default FilterScreen;
