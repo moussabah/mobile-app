@@ -1,11 +1,11 @@
 import React, {useMemo, useState} from 'react';
-import {ScrollView, FlatList, View, TextInput, StyleSheet} from "react-native";
-import EventCard from "../components/EventCard";
 import {Styles} from "../assets/styles/Styles";
-import Tag from "../components/Tag";
+import {FlatList, ScrollView, StyleSheet, TextInput, View} from "react-native";
+import EventCard from "../components/EventCard";
 import FilterService from "../services/FilterService";
+import Tag from "../components/Tag";
 
-function EventScreen({route, navigation}) {
+function ListEventScreen({route, navigation}) {
     const params = route.params;
     if (params !== undefined){
         FilterService.filterByCriteria([], params);
@@ -57,4 +57,4 @@ const eventStyles = StyleSheet.create({
     }
 })
 
-export default EventScreen;
+export default ListEventScreen;

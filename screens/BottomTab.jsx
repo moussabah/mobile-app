@@ -1,14 +1,10 @@
-import { NavigationContainer } from '@react-navigation/native';
-import {createNativeStackNavigator} from "@react-navigation/native-stack";
-import Form from "./Form";
-import EventDetail from "./EventDetail";
-import EventScreen from "./EventScreen";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import FilterScreen from "./FilterScreen";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import ListEventScreen from "./ListEventScreen";
 
 const Tab = createBottomTabNavigator();
-export default function Home({navigation}) {
+export default function BottomTab({navigation}) {
 
     return (
         <Tab.Navigator
@@ -16,15 +12,23 @@ export default function Home({navigation}) {
                 tabBarActiveTintColor: '#e91e63',
             }}
         >
-            <Tab.Screen name="EventScreen" component={EventScreen} options={
+            <Tab.Screen name="EventScreen" component={ListEventScreen} options={
                 {
                     title: 'Liste des événements',
                     tabBarLabel: "Evenements",
                     tabBarIcon: ({color, size}) => (
                         <MaterialCommunityIcons name="calendar" color={color} size={size}/>
+
                     ),
+
                 }
             }/>
+            <Tab.Screen name="MapScreen" component={FilterScreen} options={{
+                title: 'Filtre', tabBarLabel: "Carte",
+                tabBarIcon: ({color, size}) => (
+                    <MaterialCommunityIcons name="map" color={color} size={size}/>
+                ),
+            }}/>
             <Tab.Screen name="FilterScreen" component={FilterScreen} options={{
                 title: 'Filtre', tabBarLabel: "Filtre",
                 tabBarIcon: ({color, size}) => (

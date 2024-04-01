@@ -26,7 +26,7 @@ function FilterScreen({navigation}) {
     return (
         <ScrollView style={Styles.container}>
 
-            <Label name="Mot clés:" />
+            <Label name="Mots clés:" />
             <CustomInput placeholder={"Ex: Danse, Voyage, Fête"} onChange={(value) => setKeyword(value)}/>
             <Label name="Thème:" />
             <CustomInput placeholder={"Ex: Conférence"} onChange={(value) => setTheme(value)}/>
