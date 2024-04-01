@@ -1,11 +1,15 @@
 import React from 'react';
 import {Styles} from "../assets/styles/Styles";
 import {StyleSheet, TextInput} from "react-native";
+import Event from "../models/Event";
 
 function CustomInput(props) {
-    const disable = props.disbale;
+    const {disable, keyboardType} = props;
+
+
     return (
-        <TextInput editable={disable === undefined || disable === false} onChangeText={props.onChange} style={
+        <TextInput
+            editable={disable === undefined || disable === false} onChangeText={props.onChange} style={
             {
                 ...Styles.input,
                 ...styles.input,
@@ -14,7 +18,10 @@ function CustomInput(props) {
                     backgroundColor: disable !== undefined && disable === true ? "#c9c9c9":"#FFF",
                 }
             }
-        } placeholder={props.placeholder}/>
+        }
+            placeholder={props.placeholder}
+            keyboardType={keyboardType !== undefined ? keyboardType : "default"}
+        />
     );
 }
 
