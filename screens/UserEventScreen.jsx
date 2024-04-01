@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Styles} from "../assets/styles/Styles";
 import {Colors} from "../assets/styles/Colors";
-function UserEventScreen(props) {
+function UserEventScreen({navigation}) {
 
     function EventItem(){
         return (
@@ -17,10 +17,14 @@ function UserEventScreen(props) {
         )
     }
 
+    const onPressAddBtn = () => {
+        navigation.navigate("CreateEventScreen")
+    }
+
 
     return (
         <View style={componentScreen.container}>
-            <TouchableOpacity title="Ajouter un évenement" style={componentScreen.addBtn}>
+            <TouchableOpacity onPress={onPressAddBtn} title="Ajouter un évenement" style={componentScreen.addBtn}>
                 <Text style={componentScreen.btnText}>Ajouter un événement</Text>
             </TouchableOpacity>
             <ScrollView>
