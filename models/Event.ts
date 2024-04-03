@@ -11,7 +11,8 @@ export default class Event {
     public dateBegin?: string;
     public dateEnd?: string;
     public isFree?: boolean;
-    public price?:boolean;
+    public price?:number;
     public description?:string;
+    public postalCode?:string;
     public tags: Tag[] = [];
 }

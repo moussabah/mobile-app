@@ -6,55 +6,76 @@ import {Label} from "../components/Label";
 import CheckBox from "expo-checkbox";
 import Event from "../models/Event";
 import {Colors} from "../assets/styles/Colors";
-import menuScreen from "./MenuScreen";
+import EventValidator from "../services/EventValidator";
 
 function CreateEventScreen(props) {
 
-    const [toggleCheckBox, setToggleCheckBox] = useState(false)
+    const [name, setName] = useState("");
+    const [address, setAddress] = useState("");
+    const [email, setEmail] = useState("");
+    const [isFree, setIsFree] = useState(false);
+    const [dateBegin, setDateBegin] = useState("");
+    const [dateEnd, setDateEnd] = useState("");
+    const [description, setDescription] = useState("");
+    const [postalCode, setPostalCode] = useState("");
+    const [price, setPrice] = useState(0);
     const event = {
         isFree: false,
     }
     const [tags, setTags] = useState("");
 
     const onChange = (name, value) => {
-        console.log(name)
-        if (name !== "tags"){
-            event[name] = value;
+        switch (name) {
+            case "name":
+                setName(value);
+                break;
+            case "email":
+                setEmail(value);
+                break;
+            case "description":
+                setDescription(value)
+                break;
+            case "price":
+                setPrice(Number(value))
+                break;
+            case "tags":
+                setTags(value)
+                break;
+            case "address":
+                setAddress(value)
+                break;
+            case "dateEnd":
+                setDateEnd(value)
+                break;
+            case "dateBegin":
+                setDateBegin(value)
+                break;
+            case "postalCode":
+                setPostalCode(value)
+                break;
         }
     }
 
     const onSubmit = () => {
-        const data = new Event();
-        let msg = "";
-        if (!event.name){
-            msg = "Le nom ne peut être vide";
-        }
-        if (!event.address){
-            msg = "L'adresse ne peut être vide";
-        }
-        if (!event.dateBegin){
-            msg = "La date de début ne peut être vide";
-        }
-        if (!event.dateEnd){
-            msg = "La date de fin ne peut être vide";
-        }
-        if (!event.isFree && (event.price === undefined || event.price === "")){
-            msg = "Le prix ne peut être vide";
-        }
-        if (!event.description){
-            msg = "La description ne peut être vide";
-        }
-        if (msg !== ""){
-            alert(msg)
+        const event = new Event();
+        event.isFree = isFree;
+        event.price = price;
+        event.description = description;
+        event.name = name;
+        event.email = email;
+        event.address = address;
+        event.dateBegin = dateBegin;
+        event.dateEnd = dateEnd;
+        event.postalCode = postalCode;
+        console.log(postalCode)
+
+        const eventValidator = new EventValidator();
+        const errors = eventValidator.validate(event);
+        if (errors != null){
+            alert(errors);
             return;
         }
-        data.isFree = event.isFree;
-        data.price = event.price
-        data.description = event.description
-        data.name = event.name;
-        data.address = event.address;
-        data.dateBegin = event.dateBegin;
-        data.dateEnd = event.dateEnd;
+        console.log(event);
     }
 
     return (
@@ -63,6 +84,8 @@ function CreateEventScreen(props) {
             <CustomInput onChange={(value) => onChange("name", value)}/>
             <Label name="Adresse:"/>
             <CustomInput onChange={(value) => onChange("address", value)}/>
+            <Label name="Code postal:"/>
+            <CustomInput keyboardType="numeric" onChange={(value) => onChange("postalCode", value)}/>
             <Label name="Email:"/>
             <CustomInput onChange={(value) => onChange("email", value)}/>
             <Label name="Mots clés:"/>
@@ -73,11 +96,11 @@ function CreateEventScreen(props) {
                 <CheckBox
                     style={{marginTop: 10}}
                     disabled={false}
-                    value={toggleCheckBox}
-                    onValueChange={(newValue) => setToggleCheckBox(newValue)}
+                    value={isFree}
+                    onValueChange={(newValue) => setIsFree(newValue)}
                 />
             </View>
-            <CustomInput keyboardType="numeric"  disbale={toggleCheckBox} onChange={(value) => onChange("price", value)}/>
+            <CustomInput keyboardType="numeric"  disbale={isFree} onChange={(value) => onChange("price", value)}/>
             <Label name="Date de début:"/>
             <CustomInput placeholder={"Ex: 01/12/2023"} onChange={(value) => onChange("dateBegin", value)}/>
             <Label name="Date de fin:" />
