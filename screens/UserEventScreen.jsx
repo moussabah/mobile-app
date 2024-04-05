@@ -15,8 +15,8 @@ function UserEventScreen({navigation}) {
             .then(events => setEvents(events))
     }
 
-    useEffect(initData, []);
-
+    // useEffect(initData, []);
+    initData()
 
     function EventItem() {
         return (
