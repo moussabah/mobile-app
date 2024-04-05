@@ -3,6 +3,7 @@ import {Button, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View} 
 import {Colors} from "../assets/styles/Colors";
 import EventStorage from "../services/storages/EventStorage";
 import EventCard from "../components/EventCard";
+import UserEventCart from "../components/UserEventCart";
 
 function UserEventScreen({navigation}) {
 
@@ -23,7 +24,7 @@ function UserEventScreen({navigation}) {
                       keyExtractor={(item, index) => {
                           return item + index
                       }}
-                      renderItem={(item) => <EventCard event={item} navigation={navigation}/>}/>
+                      renderItem={(item) => <UserEventCart event={item.item} navigation={navigation}/>}/>
         )
     }
 
