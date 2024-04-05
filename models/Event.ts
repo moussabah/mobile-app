@@ -1,6 +1,7 @@
 import {Tag} from "./Tag";
 
 export default class Event {
+    public id?: string|number;
     public name?: string;
     public rate?:number;
     public totalRate?:number;

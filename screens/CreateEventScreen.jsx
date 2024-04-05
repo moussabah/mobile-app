@@ -7,8 +7,10 @@ import CheckBox from "expo-checkbox";
 import Event from "../models/Event";
 import {Colors} from "../assets/styles/Colors";
 import EventValidator from "../services/EventValidator";
+import TagService from "../services/TagService";
+import EventService from "../services/EventService";
 
-function CreateEventScreen(props) {
+function CreateEventScreen({navigation}) {
 
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
@@ -57,6 +59,7 @@ function CreateEventScreen(props) {
     }
 
     const onSubmit = () => {
+        const tagService = new TagService();
         const event = new Event();
         event.isFree = isFree;
         event.price = price;
@@ -67,7 +70,6 @@ function CreateEventScreen(props) {
         event.dateBegin = dateBegin;
         event.dateEnd = dateEnd;
         event.postalCode = postalCode;
-        console.log(postalCode)
 
         const eventValidator = new EventValidator();
         const errors = eventValidator.validate(event);
@@ -75,7 +77,19 @@ function CreateEventScreen(props) {
             alert(errors);
             return;
         }
-        console.log(event);
+        const eventsTag = tagService.format(tags);
+        if (eventsTag != null){
+            event.tags = eventsTag;
+        }
+        let eventService = new EventService();
+        eventService.create(event).then((response) => {
+            if (response.id != null){
+                console.log(response)
+                navigation.navigate("UserEvent");
+                return
+            }
+            alert("L'événement n'a pas été crée :)")
+        });
     }
 
     return (

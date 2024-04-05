@@ -1,3 +1,7 @@
+const domain = "https://localhost"
+
 export const config =  {
-    domain: "https://localhost",
+    route: {
+        createEvent: `${domain}/event/create`
+    },
 }
