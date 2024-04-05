@@ -1,19 +1,29 @@
-import React from 'react';
-import {Button, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {Styles} from "../assets/styles/Styles";
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {Button, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Colors} from "../assets/styles/Colors";
+import EventStorage from "../services/storages/EventStorage";
+import EventCard from "../components/EventCard";
+
 function UserEventScreen({navigation}) {
 
-    function EventItem(){
+    const [events, setEvents] = useState([]);
+    const [d, seD] = useState(0);
+    const initData = () => {
+        const event = new EventStorage();
+        event.getAll().then((res) => res)
+            .then(events => setEvents(events))
+    }
+
+    useEffect(initData, []);
+
+
+    function EventItem() {
         return (
-        <View style={componentScreen.eventItem}>
-            <View style={componentScreen.itemImage}>
-                <Text>Image</Text>
-            </View>
-            <View style={componentScreen.itemDescription}>
-                <Text>Description</Text>
-            </View>
-        </View>
+            <FlatList data={events}
+                      keyExtractor={(item, index) => {
+                          return item + index
+                      }}
+                      renderItem={(item) => <EventCard event={item} navigation={navigation}/>}/>
         )
     }
 
@@ -27,9 +37,7 @@ function UserEventScreen({navigation}) {
             <TouchableOpacity onPress={onPressAddBtn} title="Ajouter un évenement" style={componentScreen.addBtn}>
                 <Text style={componentScreen.btnText}>Ajouter un événement</Text>
             </TouchableOpacity>
-            <ScrollView>
-                <EventItem />
-            </ScrollView>
+            <EventItem/>
         </View>
     );
 }
@@ -41,20 +49,20 @@ const componentScreen = StyleSheet.create({
         paddingTop: 10,
     },
     eventItem: {
-        flexDirection:"row"
+        flexDirection: "row"
     },
-    itemImage:{
+    itemImage: {
         flex: 1,
         borderWidth: 1,
     },
-    itemDescription:{
+    itemDescription: {
         flex: 2,
         borderWidth: 1,
     },
-    addBtn:{
+    addBtn: {
         backgroundColor: Colors.primary,
         justifyContent: "center",
-        alignItems:"center",
+        alignItems: "center",
         padding: 10,
         borderRadius: 5,
         marginBottom: 10,
