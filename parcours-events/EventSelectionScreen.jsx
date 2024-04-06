@@ -7,7 +7,7 @@ const EventSelectionScreen = ({ availableEvents, courses, onAddEventToCourse }) 
     const handleAddEvent = (eventId) => {
         onAddEventToCourse(selectedCourse, eventId);
     };
-
+    console.log(courses);
     return (
         <View>
             <Text>Sélectionner un parcours :</Text>

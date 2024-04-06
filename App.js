@@ -12,11 +12,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-          <Stack.Screen name="EventScreen" component={EventScreen} options={{title: 'Liste des evenements'}} />
+          <Stack.Screen name="CourseManagementScreen" component={CourseManagementScreen} options={{title: 'Parcours'}} />
           <Stack.Screen name="Form" component={Form} />
         <Stack.Screen name="EventDetail" component={EventDetail} options={{title: 'Description'}} />
-        <Stack.Screen name="CourseManagementScreen" component={CourseManagementScreen}
-                        Options={{title: 'CourseManagementScreen'}} />
+        <Stack.Screen name="EventScreen" component={EventScreen}
+                        Options={{title: 'Liste des evenements'}} />
       </Stack.Navigator>
     </NavigationContainer>
   );

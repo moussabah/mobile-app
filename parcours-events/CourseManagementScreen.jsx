@@ -28,6 +28,7 @@ const CourseManagementScreen = () => {
             <CreateCourseScreen onCreateCourse={handleCreateCourse} />
             <EventSelectionScreen
                 availableEvents={availableEvents}
+                courses={courses}
                 onAddEventToCourse={handleAddEventToCourse}
             />
             <Text>Liste des parcours :</Text>
