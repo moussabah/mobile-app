@@ -17,6 +17,9 @@ export default class Event {
     public postalCode?:string;
     public tags: Tag[] = [];
 
+    constructor(name :string) {
+        this.name = name;
+    }
 
     format(eventData: any): Event {
         this.id = eventData.id ?? null;
