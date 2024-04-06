@@ -3,6 +3,7 @@ import {Styles} from "../assets/styles/Styles";
 import {FlatList, ScrollView, StyleSheet, TextInput, View} from "react-native";
 import FilterService from "../services/FilterService";
 import Tag from "../components/Tag";
+import CourseCard from "../components/CourseCard";
 
 function ListCourseScreen({route, navigation}) {
     const params = route.params;

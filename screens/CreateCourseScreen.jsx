@@ -67,7 +67,7 @@ function CreateCourseScreen({navigation}) {
             <Label name="Titre du parcours:" />
             <CustomInput onChange={(value) => onChange("title", value)}/>
             <Label name="Mots clés:"/>
-            <CustomInput placeholder={"Ex: Danse, Dessin, etc."} onChange={(value) => setTags(value)}/>
+            <CustomInput placeholder={"Ex: test, test, etc."} onChange={(value) => setTags(value)}/>
             <Label name="Description" />
             <TextInput
                 onChangeText={(value) => onChange("description", value)}

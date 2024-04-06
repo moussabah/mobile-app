@@ -1,6 +1,5 @@
 import {Tag} from './Tag';
 import Event from "./Event";
-import any = jasmine.any;
 
 export default class Course {
     id?: string|number;
