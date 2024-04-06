@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, Text, Button, FlatList } from 'react-native';
 
 const EventSelectionScreen = ({ availableEvents, courses, onAddEventToCourse }) => {

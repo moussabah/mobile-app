@@ -5,8 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import EventScreen from "./screens/EventScreen";
 import EventDetail from "./screens/EventDetail";
 import CourseManagementScreen from "./parcours-events/CourseManagementScreen";
-import CreateCourseScreen from "./parcours-events/CreateCourseScreen";
-
 
 const Stack = createNativeStackNavigator();
 
@@ -17,8 +15,8 @@ export default function App() {
           <Stack.Screen name="EventScreen" component={EventScreen} options={{title: 'Liste des evenements'}} />
           <Stack.Screen name="Form" component={Form} />
         <Stack.Screen name="EventDetail" component={EventDetail} options={{title: 'Description'}} />
-        <Stack.Screen name="CouseManagementScreen" component={CouseManagementScreen}
-                        Options={{title: 'CouseManagementScreen'}} />
+        <Stack.Screen name="CourseManagementScreen" component={CourseManagementScreen}
+                        Options={{title: 'CourseManagementScreen'}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
