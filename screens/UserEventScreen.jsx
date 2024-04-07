@@ -1,8 +1,7 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {Button, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import React, {useEffect, useState} from 'react';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Colors} from "../assets/styles/Colors";
 import EventStorage from "../services/storages/EventStorage";
-import EventCard from "../components/EventCard";
 import UserEventCart from "../components/UserEventCart";
 
 function UserEventScreen({navigation}) {
