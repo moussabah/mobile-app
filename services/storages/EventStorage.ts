@@ -21,8 +21,10 @@ export default class EventStorage implements StorageService<Event>{
         return Promise.resolve();
     }
 
-    delete(id: number | string): Promise<Event> {
-        return Promise.resolve(new Event());
+    async delete(id: number | string): Promise<void> {
+        const events = await this.getAll();
+        const newEvents = events.filter((event) => event.id !== id)
+        await AsyncStorage.setItem(this.storageKey, JSON.stringify(newEvents))
     }
 
     get(id: number | string): Promise<Event> {

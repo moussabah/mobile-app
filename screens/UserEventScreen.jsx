@@ -4,14 +4,15 @@ import {Colors} from "../assets/styles/Colors";
 import EventStorage from "../services/storages/EventStorage";
 import UserEventCart from "../components/UserEventCart";
 import {Messages} from "../config/message";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function UserEventScreen({navigation}) {
 
     const [events, setEvents] = useState([]);
     const [d, seD] = useState(0);
+    const eventStorage = new EventStorage();
     const initData = () => {
-        const event = new EventStorage();
-        event.getAll().then((res) => res)
+        eventStorage.getAll().then((res) => res)
             .then(events => setEvents(events))
     }
 
@@ -23,8 +24,10 @@ function UserEventScreen({navigation}) {
             {
                 text: Messages.fr.alter.yesBtn,
                 onPress: () => {
-                    const newEvents =events.filter((event) => event.id !== id)
-                    setEvents(newEvents);
+                    eventStorage.delete(id).then(() => {
+                        const newEvents =events.filter((event) => event.id !== id)
+                        setEvents(newEvents);
+                    })
                 }
             },
             {
