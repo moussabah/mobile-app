@@ -37,7 +37,8 @@ function UserEventScreen({navigation}) {
         ])
     }
     const onBrowseItem = (id) => {
-        console.log("browse")
+        const event = events.findLast((event) => event.id === id);
+        navigation.navigate("CreateEventScreen", {event})
     }
 
     function EventItem() {
