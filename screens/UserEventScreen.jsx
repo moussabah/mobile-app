@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, StyleSheet, Text, TouchableOpacity, View, Alert} from "react-native";
 import {Colors} from "../assets/styles/Colors";
 import EventStorage from "../services/storages/EventStorage";
 import UserEventCart from "../components/UserEventCart";
+import {Messages} from "../config/message";
 
 function UserEventScreen({navigation}) {
 
@@ -16,13 +17,39 @@ function UserEventScreen({navigation}) {
 
     useEffect(initData, []);
 
+
+    const onDeleteItem = (id) => {
+        Alert.alert(Messages.fr.alter.delete.title,Messages.fr.confirmMessage, [
+            {
+                text: Messages.fr.alter.yesBtn,
+                onPress: () => {
+                    const newEvents =events.filter((event) => event.id !== id)
+                    setEvents(newEvents);
+                }
+            },
+            {
+                text: Messages.fr.alter.noBtn,
+                type: "cancel",
+            }
+        ])
+    }
+    const onBrowseItem = (id) => {
+        console.log("browse")
+    }
+
     function EventItem() {
         return (
             <FlatList data={events}
                       keyExtractor={(item, index) => {
                           return item + index
                       }}
-                      renderItem={(item) => <UserEventCart event={item.item} navigation={navigation}/>}/>
+                      renderItem={(item) => {
+                          return  <UserEventCart event={item.item}
+                                                 onBrowse={() => onBrowseItem(item.item.id)}
+                                                 onDelete={() => onDeleteItem(item.item.id)}
+                                                 navigation={navigation}
+                          />
+                      }}/>
         )
     }
 

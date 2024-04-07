@@ -5,7 +5,7 @@ import EventCard from "./EventCard";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {Colors} from "../assets/styles/Colors";
 
-function UserEventCart({event, navigation}) {
+function UserEventCart({event, onDelete, onBrowse, navigation}) {
     return (
         <View style={componentStyles.container}>
             <View style={componentStyles.leftSide}>
@@ -13,10 +13,10 @@ function UserEventCart({event, navigation}) {
                 <Text style={componentStyles.description}>{event.description}</Text>
             </View>
             <View style={componentStyles.rightSide}>
-                <TouchableOpacity style={componentStyles.eyeBtn}>
+                <TouchableOpacity style={componentStyles.eyeBtn} onPress={onBrowse}>
                     <MaterialCommunityIcons name="eye" size={30} color={Colors.primary}/>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={onDelete}>
                     <MaterialCommunityIcons name="delete" size={30} color={Colors.danger}/>
                 </TouchableOpacity>
             </View>
