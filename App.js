@@ -1,36 +1,31 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import EventScreen from "./screens/EventScreen";
+import EventScreen from "./screens/MenuScreen";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import FilterScreen from "./screens/FilterScreen";
+import BottomTab from "./screens/BottomTab";
+import EventDetail from "./screens/EventDetail";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import MenuScreen from "./screens/MenuScreen";
+import UserEventScreen from "./screens/UserEventScreen";
+import CardScreen from "./screens/CardScreen";
+import ParcourScreen from "./screens/ParcourScreen";
+import CreateEventScreen from "./screens/CreateEventScreen";
 
-
-const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
     return (
         <NavigationContainer>
-            <Tab.Navigator
-                screenOptions={{
-                    tabBarActiveTintColor: '#e91e63',
-                }}
-            >
-                <Tab.Screen name="EventScreen" component={EventScreen} options={
-                    {
-                        title: 'Liste des événements',
-                        tabBarLabel: "Evenements",
-                        tabBarIcon: ({color, size}) => (
-                            <MaterialCommunityIcons name="calendar" color={color} size={size}/>
-                        ),
-                    }
-                }/>
-                <Tab.Screen name="EventDetail" component={FilterScreen} options={{
-                    title: 'Filtre', tabBarLabel: "Filtre",
-                    tabBarIcon: ({color, size}) => (
-                        <MaterialCommunityIcons name="tune" color={color} size={size}/>
-                    ),
-                }}/>
-            </Tab.Navigator>
+            <Stack.Navigator>
+                <Stack.Screen name="Home" component={MenuScreen} options={{title: 'Menu'}} />
+                <Stack.Screen name="EventList" component={BottomTab} options={{title: 'Menu', headerShown: false}} />
+                <Stack.Screen name="UserEvent" component={UserEventScreen} options={{title: 'Mes événements'}} />
+                <Stack.Screen name="CardScreen" component={CardScreen} options={{title: 'Carte'}} />
+                <Stack.Screen name="CreateEventScreen" component={CreateEventScreen} options={{title: 'Créer un événement'}} />
+                <Stack.Screen name="ParcourScreen" component={ParcourScreen} options={{title: 'Parcours'}} />
+                <Stack.Screen name="EventDetail" component={EventDetail} options={{title: 'Description'}} />
+            </Stack.Navigator>
         </NavigationContainer>
     );
 }

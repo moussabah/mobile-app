@@ -1,12 +1,15 @@
 import React, {useMemo, useState} from 'react';
-import {ScrollView, FlatList, View, TextInput, StyleSheet, TouchableOpacity} from "react-native";
-import EventCard from "../components/EventCard";
 import {Styles} from "../assets/styles/Styles";
+import {FlatList, ScrollView, StyleSheet, TextInput, View} from "react-native";
+import EventCard from "../components/EventCard";
+import FilterService from "../services/FilterService";
 import Tag from "../components/Tag";
-import tag from "../components/Tag";
 
-function EventScreen({navigation}) {
-
+function ListEventScreen({route, navigation}) {
+    const params = route.params;
+    if (params !== undefined){
+        FilterService.filterByCriteria([], params);
+    }
     const tags = ["Tout", "Informatique", "Science", "Programmation", "IA", "École", "Business"]
     const [activeTag, setActiveTag] = useState(null);
 
@@ -47,9 +50,6 @@ function EventScreen({navigation}) {
 }
 
 const eventStyles = StyleSheet.create({
-    input: {
-        marginTop: 5,
-    },
     tagContainer: {
         marginTop: 5,
         paddingTop:1,
@@ -57,4 +57,4 @@ const eventStyles = StyleSheet.create({
     }
 })
 
-export default EventScreen;
+export default ListEventScreen;
