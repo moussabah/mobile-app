@@ -7,7 +7,7 @@ export default class EventService implements CrudInterface<Event>{
     async create(entity: Event ): Promise<Event> {
         await HttpRequestService.postData(config.route.createEvent, entity)
         const eventStorage = new EventStorage();
-        entity.id = 1;
+        entity.id = await eventStorage.getLastId();
         await eventStorage.add(entity);
         return entity;
     }

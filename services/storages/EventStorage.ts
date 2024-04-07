@@ -44,4 +44,17 @@ export default class EventStorage implements StorageService<Event>{
         return Promise.resolve(new Event());
     }
 
+
+     async getLastId(): Promise<string|number> {
+        const events = await this.getAll();
+        if (events.length == 0){
+            return 1;
+        }
+        const lastId = events[events.length-1]!.id!;
+        if (typeof lastId == "string"){
+            return lastId+"1";
+        }
+        return lastId+1;
+    }
+
 }
