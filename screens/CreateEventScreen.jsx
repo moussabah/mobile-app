@@ -84,13 +84,20 @@ function CreateEventScreen({route, navigation}) {
             event.tags = eventsTag;
         }
         let eventService = new EventService();
-        eventService.create(event).then((response) => {
-            if (response.id != null){
-                console.log(response)
-                navigation.navigate("UserEvent");
-                return
-            }
-            alert("L'événement n'a pas été crée :)")
+        if (eventFromUser ==  null){
+            eventService.create(event).then((response) => {
+                if (response.id != null){
+                    console.log(response)
+                    navigation.navigate("UserEvent");
+                    return
+                }
+                alert("L'événement n'a pas été crée :)")
+            });
+            return;
+        }
+        event.id = eventFromUser.id;
+        eventService.update(event).then(res => {
+            navigation.navigate("UserEvent");
         });
     }
 
@@ -130,7 +137,7 @@ function CreateEventScreen({route, navigation}) {
                 numberOfLines={10}
                 />
             <TouchableOpacity style={componentStyles.btn} onPress={onSubmit}>
-                <Text style={componentStyles.btnText}>Créer</Text>
+                <Text style={componentStyles.btnText}>{eventFromUser != null ? 'Mettre à jour':'créer'}</Text>
             </TouchableOpacity>
 
         </ScrollView>
