@@ -29,6 +29,7 @@ export default class Event {
         this.price = eventData.price ?? null;
         this.description = eventData.description ?? null;
         this.postalCode = eventData.postalCode ?? null;
+        this.address = eventData.address ?? null;
 
         if (Array.isArray(eventData.tags)){
             this.tags = eventData.tags.map((tag: any): Tag => {
