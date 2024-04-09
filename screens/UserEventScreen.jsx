@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View, Alert} from "react-native";
 import {Colors} from "../assets/styles/Colors";
 import EventStorage from "../services/storages/EventStorage";
 import UserEventCart from "../components/UserEventCart";
 import {Messages} from "../config/message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {useFocusEffect} from "@react-navigation/native";
 
 function UserEventScreen({navigation}) {
 
@@ -14,9 +15,15 @@ function UserEventScreen({navigation}) {
     const initData = () => {
         eventStorage.getAll().then((res) => res)
             .then(events => setEvents(events))
+
     }
 
-    useEffect(initData, []);
+    useFocusEffect(useCallback(() => {
+        initData()
+        return () => {}
+    }, []))
+
+    //useEffect(initData, []);
 
 
     const onDeleteItem = (id) => {
@@ -37,7 +44,8 @@ function UserEventScreen({navigation}) {
         ])
     }
     const onBrowseItem = (id) => {
-        console.log("browse")
+        const event = events.findLast((event) => event.id === id);
+        navigation.navigate("CreateEventScreen", {event})
     }
 
     function EventItem() {

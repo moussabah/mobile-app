@@ -42,8 +42,12 @@ export default class EventStorage implements StorageService<Event>{
         });
     }
 
-    update(id: number | string): Promise<Event> {
-        return Promise.resolve(new Event());
+    async update(item: Event): Promise<Event> {
+        const events = await this.getAll();
+        const index = events.findIndex(event => event.id == item.id);
+        events[index] = item;
+        await AsyncStorage.setItem(this.storageKey, JSON.stringify(events));
+        return Promise.resolve(item);
     }
 
 

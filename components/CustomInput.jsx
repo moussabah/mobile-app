@@ -9,6 +9,7 @@ function CustomInput(props) {
 
     return (
         <TextInput
+            value={props.value}
             editable={disable === undefined || disable === false} onChangeText={props.onChange} style={
             {
                 ...Styles.input,

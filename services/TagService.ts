@@ -9,4 +9,14 @@ export default class TagService {
             return new Tag(item.trim())
         });
     }
+
+    arrayToString(tags?: Tag[]): string {
+        if (tags == null){
+            return "";
+        }
+        let names = tags.map(tag => {
+            return tag.name;
+        })
+        return names.join(',')
+    }
 }

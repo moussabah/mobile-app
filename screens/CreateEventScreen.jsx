@@ -10,21 +10,26 @@ import EventValidator from "../services/EventValidator";
 import TagService from "../services/TagService";
 import EventService from "../services/EventService";
 
-function CreateEventScreen({navigation}) {
+function CreateEventScreen({route, navigation}) {
 
-    const [name, setName] = useState("");
-    const [address, setAddress] = useState("");
-    const [email, setEmail] = useState("");
-    const [isFree, setIsFree] = useState(false);
-    const [dateBegin, setDateBegin] = useState("");
-    const [dateEnd, setDateEnd] = useState("");
-    const [description, setDescription] = useState("");
-    const [postalCode, setPostalCode] = useState("");
-    const [price, setPrice] = useState(0);
-    const event = {
-        isFree: false,
+    const tagService = new TagService();
+
+    let eventFromUser = null;
+    if (route.params && route.params.event){
+        eventFromUser = route.params.event;
     }
-    const [tags, setTags] = useState("");
+
+    const [name, setName] = useState(eventFromUser?.name || "");
+    const [address, setAddress] = useState(eventFromUser?.address || "");
+    const [email, setEmail] = useState(eventFromUser?.email || "");
+    const [isFree, setIsFree] = useState(eventFromUser?.isFree || false);
+    const [dateBegin, setDateBegin] = useState(eventFromUser?.dateBegin || "");
+    const [dateEnd, setDateEnd] = useState(eventFromUser?.dateEnd || "");
+    const [description, setDescription] = useState(eventFromUser?.description || "");
+    const [postalCode, setPostalCode] = useState(eventFromUser?.postalCode || null);
+    const [price, setPrice] = useState(eventFromUser?.price || 0);
+    const [tags, setTags] = useState(tagService.arrayToString(eventFromUser?.tags));
+    console.log({postalCode})
 
     const onChange = (name, value) => {
         switch (name) {
@@ -59,7 +64,6 @@ function CreateEventScreen({navigation}) {
     }
 
     const onSubmit = () => {
-        const tagService = new TagService();
         const event = new Event();
         event.isFree = isFree;
         event.price = price;
@@ -82,28 +86,35 @@ function CreateEventScreen({navigation}) {
             event.tags = eventsTag;
         }
         let eventService = new EventService();
-        eventService.create(event).then((response) => {
-            if (response.id != null){
-                console.log(response)
-                navigation.navigate("UserEvent");
-                return
-            }
-            alert("L'événement n'a pas été crée :)")
+        if (eventFromUser ==  null){
+            eventService.create(event).then((response) => {
+                if (response.id != null){
+                    console.log(response)
+                    navigation.navigate("UserEvent");
+                    return
+                }
+                alert("L'événement n'a pas été crée :)")
+            });
+            return;
+        }
+        event.id = eventFromUser.id;
+        eventService.update(event).then(res => {
+            navigation.navigate("UserEvent");
         });
     }
 
     return (
         <ScrollView style={{...Styles.container, ...{paddingHorizontal: 15, paddingVertical: 10,}}}>
             <Label name="Nom de l'événement:" />
-            <CustomInput onChange={(value) => onChange("name", value)}/>
+            <CustomInput value={name} onChange={(value) => onChange("name", value)}/>
             <Label name="Adresse:"/>
-            <CustomInput onChange={(value) => onChange("address", value)}/>
+            <CustomInput value={address} onChange={(value) => onChange("address", value)}/>
             <Label name="Code postal:"/>
-            <CustomInput keyboardType="numeric" onChange={(value) => onChange("postalCode", value)}/>
+            <CustomInput value={postalCode} keyboardType="numeric" onChange={(value) => onChange("postalCode", value)}/>
             <Label name="Email:"/>
-            <CustomInput onChange={(value) => onChange("email", value)}/>
+            <CustomInput value={email} onChange={(value) => onChange("email", value)}/>
             <Label name="Mots clés:"/>
-            <CustomInput placeholder={"Ex: Danse, Dessin, etc."} onChange={(value) => setTags(value)}/>
+            <CustomInput value={tags} placeholder={"Ex: Danse, Dessin, etc."} onChange={(value) => setTags(value)}/>
             <View style={{flexDirection: "row", alignItems: "baseline"}}>
                 <Label name="Prix (€):  " />
                 <Text style={{fontSize: 18}}>Gratuit: </Text>
@@ -114,20 +125,21 @@ function CreateEventScreen({navigation}) {
                     onValueChange={(newValue) => setIsFree(newValue)}
                 />
             </View>
-            <CustomInput keyboardType="numeric"  disbale={isFree} onChange={(value) => onChange("price", value)}/>
+            <CustomInput value={price} keyboardType="numeric"  disbale={isFree} onChange={(value) => onChange("price", value)}/>
             <Label name="Date de début:"/>
-            <CustomInput placeholder={"Ex: 01/12/2023"} onChange={(value) => onChange("dateBegin", value)}/>
+            <CustomInput value={dateBegin} placeholder={"Ex: 01/12/2023"} onChange={(value) => onChange("dateBegin", value)}/>
             <Label name="Date de fin:" />
-            <CustomInput placeholder={"Ex: 31/12/2023"} onChange={(value) => onChange("dateEnd", value)}/>
+            <CustomInput value={dateEnd} placeholder={"Ex: 31/12/2023"} onChange={(value) => onChange("dateEnd", value)}/>
             <Label name="Description" />
             <TextInput
+                value={description}
                 onChangeText={(value) => onChange("description", value)}
                 style={componentStyles.textArea}
                 multiline={true}
                 numberOfLines={10}
                 />
             <TouchableOpacity style={componentStyles.btn} onPress={onSubmit}>
-                <Text style={componentStyles.btnText}>Créer</Text>
+                <Text style={componentStyles.btnText}>{eventFromUser != null ? 'Mettre à jour':'créer'}</Text>
             </TouchableOpacity>
 
         </ScrollView>
