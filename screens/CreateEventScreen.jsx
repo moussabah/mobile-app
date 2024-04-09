@@ -19,10 +19,6 @@ function CreateEventScreen({route, navigation}) {
         eventFromUser = route.params.event;
     }
 
-    console.log({
-        eventFromUser
-    })
-
     const [name, setName] = useState(eventFromUser?.name || "");
     const [address, setAddress] = useState(eventFromUser?.address || "");
     const [email, setEmail] = useState(eventFromUser?.email || "");
