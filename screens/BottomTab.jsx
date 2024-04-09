@@ -2,6 +2,8 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import FilterScreen from "./FilterScreen";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import ListEventScreen from "./ListEventScreen";
+import { getHeaderTitle } from '@react-navigation/elements';
+import EventListHeader from "../components/EventListHeader";
 
 const Tab = createBottomTabNavigator();
 export default function BottomTab({navigation}) {
@@ -18,8 +20,11 @@ export default function BottomTab({navigation}) {
                     tabBarLabel: "Evenements",
                     tabBarIcon: ({color, size}) => (
                         <MaterialCommunityIcons name="calendar" color={color} size={size}/>
-
                     ),
+                    header:({ navigation, route, options, back }) => {
+                        const title = getHeaderTitle(options, route.name)
+                        return <EventListHeader title={title} action={() => navigation.navigate("CreateEventScreen")} />
+                    }
 
                 }
             }/>
