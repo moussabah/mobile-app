@@ -12,10 +12,16 @@ import EventService from "../services/EventService";
 
 function CreateEventScreen({route, navigation}) {
 
+    const tagService = new TagService();
+
     let eventFromUser = null;
     if (route.params && route.params.event){
         eventFromUser = route.params.event;
     }
+
+    console.log({
+        eventFromUser
+    })
 
     const [name, setName] = useState(eventFromUser?.name || "");
     const [address, setAddress] = useState(eventFromUser?.address || "");
@@ -26,7 +32,7 @@ function CreateEventScreen({route, navigation}) {
     const [description, setDescription] = useState(eventFromUser?.description || "");
     const [postalCode, setPostalCode] = useState(eventFromUser?.postalCode || "");
     const [price, setPrice] = useState(eventFromUser?.price || 0);
-    const [tags, setTags] = useState("");
+    const [tags, setTags] = useState(tagService.arrayToString(eventFromUser?.tags));
 
     const onChange = (name, value) => {
         switch (name) {
@@ -61,7 +67,6 @@ function CreateEventScreen({route, navigation}) {
     }
 
     const onSubmit = () => {
-        const tagService = new TagService();
         const event = new Event();
         event.isFree = isFree;
         event.price = price;
