@@ -26,9 +26,10 @@ function CreateEventScreen({route, navigation}) {
     const [dateBegin, setDateBegin] = useState(eventFromUser?.dateBegin || "");
     const [dateEnd, setDateEnd] = useState(eventFromUser?.dateEnd || "");
     const [description, setDescription] = useState(eventFromUser?.description || "");
-    const [postalCode, setPostalCode] = useState(eventFromUser?.postalCode || "");
+    const [postalCode, setPostalCode] = useState(eventFromUser?.postalCode || null);
     const [price, setPrice] = useState(eventFromUser?.price || 0);
     const [tags, setTags] = useState(tagService.arrayToString(eventFromUser?.tags));
+    console.log({postalCode})
 
     const onChange = (name, value) => {
         switch (name) {
