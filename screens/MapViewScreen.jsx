@@ -8,10 +8,10 @@ function MapViewScreen(props) {
             <MapView
                 style={styles.map}
                 initialRegion={{
-                latitude: 49.163128,
-                longitude: -0.34709599999999996,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
+                    latitude: 49.163128,
+                    longitude: -0.34709599999999996,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
                 }}>
                 <Marker
                     key={1}
@@ -21,6 +21,7 @@ function MapViewScreen(props) {
                     }}
                     title={"Festival"}
                     description={"2022-23"}
+                    onPress={() => alert("COOOLL")}
                 />
                 <Marker
                     key={2}
@@ -29,10 +30,12 @@ function MapViewScreen(props) {
                         longitude: -1.34709599999999996,
                     }}
                     title={"Festival"}
+                    onPress={() => alert("COOOLL")}
                     description={"2022-23"}
                 />
                 <Marker
                     key={3}
+                    onPress={() => alert("COOOLL")}
                     coordinate={{
                         latitude: 49.163128,
                         longitude: -0.34709599999999996,
@@ -46,6 +49,7 @@ function MapViewScreen(props) {
                         latitude: 48.163128,
                         longitude: -0.34709599999999996,
                     }}
+                    onPress={() => alert("COOOLL")}
                     title={"Concert Fally Ipupa"}
                     description={"2022-23"}
                 />
