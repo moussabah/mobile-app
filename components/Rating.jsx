@@ -4,7 +4,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 function Rating(props) {
     const NUM_OF_STARS = 5;
-    const [rate, setRate] = useState(5);
+    const [rate, setRate] = useState(props.value ?? 0);
     const getStarsBtn = () => {
         const stars = [];
         const onPress = (value) => {

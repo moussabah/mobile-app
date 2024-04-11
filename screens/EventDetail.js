@@ -6,7 +6,7 @@ import RatingService from "../services/RatingService";
 
 function EventDetail({route, navigation}) {
     const {event} = route.params;
-    const [rate, setRate] = useState(5);
+    const [rate, setRate] = useState(event.rate ?? 0);
     const ratingService = new RatingService();
     const onRate = (value) => {
         ratingService
@@ -20,7 +20,7 @@ function EventDetail({route, navigation}) {
             <View style={styles.image}>
                 <Image resizeMode={"contain"} source={{uri: event.image}} height={250}/>
             </View>
-            <Rating onPress={(value) => onRate(value)} />
+            <Rating value={rate} onPress={(value) => onRate(value)} />
             <Text style={styles.rate}>({rate}/5)</Text>
             <View>
                 <Text style={styles.title}>{event.titre_fr}</Text>
