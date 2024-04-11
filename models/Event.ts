@@ -3,7 +3,7 @@ import {Tag} from "./Tag";
 export default class Event {
     public id?: string|number;
     public name?: string;
-    public rate?:number;
+    public rate:number = 0;
     public totalRate?:number;
     public address?:string;
     public email?: string;
@@ -21,7 +21,7 @@ export default class Event {
     format(eventData: any): Event {
         this.id = eventData.id ?? null;
         this.name = eventData.name ?? null;
-        this.rate = eventData.rate ?? null;
+        this.rate = eventData.rate ?? 0;
         this.email = eventData.email ?? null;
         this.dateEnd = eventData.dateEnd ?? null;
         this.dateBegin = eventData.dateBegin ?? null;
