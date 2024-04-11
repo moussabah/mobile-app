@@ -23,7 +23,7 @@ function Rating(props) {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={{...styles.container, ...props.style}}>
             {getStarsBtn()}
         </View>
     );
