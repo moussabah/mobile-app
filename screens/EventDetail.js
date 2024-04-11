@@ -1,6 +1,7 @@
 import React from 'react';
 import {Image, Text, View, StyleSheet} from "react-native";
 import HtmlView from "react-native-htmlview";
+import Rating from "../components/Rating";
 
 function EventDetail({route, navigation}) {
     const {event} = route.params;
@@ -10,6 +11,7 @@ function EventDetail({route, navigation}) {
             <View>
                 <Image resizeMode={"contain"} source={{uri: event.image}} height={250}/>
             </View>
+            <Rating />
             <View>
                 <Text style={styles.title}>{event.titre_fr}</Text>
                 <Text style={styles.date}>{event.resume_horaires_fr}</Text>
