@@ -4,11 +4,12 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 function Rating(props) {
     const NUM_OF_STARS = 5;
-    const [rate, setRate] = useState(2 );
+    const [rate, setRate] = useState(5);
     const getStarsBtn = () => {
         const stars = [];
         const onPress = (value) => {
             setRate(value);
+            props.onPress(value);
         }
 
         for (let i = 0; i < NUM_OF_STARS; i++) {
@@ -32,7 +33,6 @@ function Rating(props) {
 const styles = StyleSheet.create({
    container:{
        flexDirection: "row",
-       marginVertical: 12,
    },
     clicked: {
        color: "#dad31c",
