@@ -1,59 +1,56 @@
-import React from 'react';
-import {StyleSheet, View} from "react-native";
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View, ActivityIndicator} from "react-native";
 import MapView, {Marker} from "react-native-maps";
+import EventService from "../services/EventService";
 
-function MapViewScreen(props) {
+function MapViewScreen({navigation}) {
+
+    const eventsServices = new EventService();
+
+    const [events, setEvents] = useState([]);
+
+    useEffect(() => {
+
+    }, [events]);
+
+    function getMarkers(){
+        const markets = [];
+        for (let i = 0; i < events.length ; i++) {
+            markets.push(
+                <Marker
+                    key={i}
+                    coordinate={{
+                        latitude: events[i].geolocation.latitude,
+                        longitude: events[i].geolocation.longitude,
+                    }}
+                    title={events[i].name}
+                    description={events[i].description}
+                    onPress={() => navigation.navigate('EventDetail', {
+                        event: events[i]
+                    })}
+                />
+            )
+        }
+        return markets;
+    }
+
     return (
         <View style={styles.container}>
-            <MapView
-                style={styles.map}
-                initialRegion={{
-                    latitude: 49.163128,
-                    longitude: -0.34709599999999996,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                }}>
-                <Marker
-                    key={1}
-                    coordinate={{
-                        latitude: 49.163128,
-                        longitude: -0.34709599999999996,
-                    }}
-                    title={"Festival"}
-                    description={"2022-23"}
-                    onPress={() => alert("COOOLL")}
-                />
-                <Marker
-                    key={2}
-                    coordinate={{
-                        latitude: 46.163128,
-                        longitude: -1.34709599999999996,
-                    }}
-                    title={"Festival"}
-                    onPress={() => alert("COOOLL")}
-                    description={"2022-23"}
-                />
-                <Marker
-                    key={3}
-                    onPress={() => alert("COOOLL")}
-                    coordinate={{
-                        latitude: 49.163128,
-                        longitude: -0.34709599999999996,
-                    }}
-                    title={"RDV Diapason"}
-                    description={"2023-24"}
-                />
-                <Marker
-                    key={4}
-                    coordinate={{
-                        latitude: 48.163128,
-                        longitude: -0.34709599999999996,
-                    }}
-                    onPress={() => alert("COOOLL")}
-                    title={"Concert Fally Ipupa"}
-                    description={"2022-23"}
-                />
-            </MapView>
+            {events.length ===  0 ?
+                <ActivityIndicator size="large" /> :
+                (
+                    <MapView
+                        style={styles.map}
+                        initialRegion={{
+                            latitude: 48.8566,
+                            longitude: 2.3522,
+                            latitudeDelta:  0,
+                            longitudeDelta: 0,
+                        }}>
+                        {getMarkers()}
+                    </MapView>
+                )}
+
         </View>
     );
 }
@@ -61,6 +58,8 @@ function MapViewScreen(props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        alignItems:"center",
+        justifyContent:"center"
     },
     map: {
         width: "100%",

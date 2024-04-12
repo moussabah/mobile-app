@@ -22,18 +22,18 @@ function MenuScreen({route, navigation}) {
                 </InteractiveCard>
             </View>
             <View style={styles.grid}>
-                <InteractiveCard onPress={() => navigation.navigate("CardScreen")}>
+                <InteractiveCard onPress={() => navigation.navigate("UserInfos")}>
                     <MaterialCommunityIcons name="account-circle" size={65}/>
                     <Text>Mes informations</Text>
                 </InteractiveCard>
                 <InteractiveCard onPress={() => navigation.navigate("UserEvent")}>
                     <MaterialCommunityIcons name="calendar-plus" size={65}/>
-                    <Text>Mes événements</Text>
+                    <Text>Mes événements </Text>
                 </InteractiveCard>
             </View>
             <View style={styles.grid}>
                 <InteractiveCard onPress={() => navigation.navigate("CardScreen")}>
-                    <MaterialCommunityIcons name="map" size={65}/>
+                    <MaterialCommunityIcons name="map" size={65} />
                     <Text>Carte</Text>
                 </InteractiveCard>
             </View>
