@@ -1,4 +1,5 @@
 import {Tag} from "./Tag";
+import Geolocation from "./Geolocation";
 
 export default class Event {
     public id?: string|number;

@@ -1,4 +1,4 @@
-class Geolocation {
+export default class Geolocation {
     private _latitude: number;
     private _longitude: number;
 

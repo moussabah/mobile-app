@@ -10,7 +10,10 @@ function MapViewScreen({navigation}) {
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
-
+        eventsServices.getAll()
+            .then(events => {
+                setEvents(events);
+            })
     }, [events]);
 
     function getMarkers(){
