@@ -1,4 +1,5 @@
 import {Tag} from "./Tag";
+import Geolocation from "./Geolocation";
 
 export default class Event {
     public id?: string|number;
@@ -14,8 +15,10 @@ export default class Event {
     public isFree?: boolean;
     public price?:number;
     public description?:string;
+    public descriptionFr?:string;
     public postalCode?:string;
     public tags: Tag[] = [];
+    public geolocation?: Geolocation;
 
 
     format(eventData: any): Event {
@@ -30,6 +33,7 @@ export default class Event {
         this.description = eventData.description ?? null;
         this.postalCode = eventData.postalCode ?? null;
         this.address = eventData.address ?? null;
+        this.descriptionFr = eventData.descriptionFr ?? null;
 
         if (Array.isArray(eventData.tags)){
             this.tags = eventData.tags.map((tag: any): Tag => {
@@ -37,6 +41,10 @@ export default class Event {
             })
         }
         return this
+    }
+
+    setGeolocation(lon: number, lat:number ){
+        this.geolocation = new Geolocation(lon, lat);
     }
 
 }

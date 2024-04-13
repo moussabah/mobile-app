@@ -11,6 +11,7 @@ import UserEventScreen from "./screens/UserEventScreen";
 import CardScreen from "./screens/CardScreen";
 import ParcourScreen from "./screens/ParcourScreen";
 import CreateEventScreen from "./screens/CreateEventScreen";
+import MapViewScreen from "./screens/MapViewScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +22,7 @@ export default function App() {
                 <Stack.Screen name="Home" component={MenuScreen} options={{title: 'Menu'}} />
                 <Stack.Screen name="EventList" component={BottomTab} options={{title: 'Menu', headerShown: false}} />
                 <Stack.Screen name="UserEvent" component={UserEventScreen} options={{title: 'Mes événements'}} />
-                <Stack.Screen name="CardScreen" component={CardScreen} options={{title: 'Carte'}} />
+                <Stack.Screen name="CardScreen" component={MapViewScreen} options={{title: 'Carte'}} />
                 <Stack.Screen name="CreateEventScreen" component={CreateEventScreen} options={{title: 'Créer un événement'}} />
                 <Stack.Screen name="ParcourScreen" component={ParcourScreen} options={{title: 'Parcours'}} />
                 <Stack.Screen name="EventDetail" component={EventDetail} options={{title: 'Description'}} />

@@ -3,6 +3,7 @@ import HttpRequestService from "./HttpRequestService";
 import {config} from "../config/config";
 import CrudInterface from "./CrudInterface";
 import EventStorage from "./storages/EventStorage";
+import FakerService from "./FakerService";
 export default class EventService implements CrudInterface<Event>{
 
     private eventStorage = new EventStorage();
@@ -25,5 +26,14 @@ export default class EventService implements CrudInterface<Event>{
     async update(entity: Event): Promise<boolean> {
         await this.eventStorage.update(entity);
         return Promise.resolve(false);
+    }
+
+    getAll(): Promise<Event[]>{
+        const fakers = new FakerService();
+        return new Promise<Event[]>((resolve, reject) => {
+            setTimeout(() => {
+                resolve(fakers.getEvents(100));
+            }, 3000)
+        })
     }
 }
