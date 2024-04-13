@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import TagService from "../services/TagService";
 import Course from "../models/Course";
 import CourseValidator from "../services/CourseValidator";
@@ -8,12 +8,31 @@ import {ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native"
 import {Styles} from "../assets/styles/Styles";
 import {Label} from "../components/Label";
 import CustomInput from "../components/CustomInput";
+import EventStorage from "../services/storages/EventStorage";
 import CheckBox from "expo-checkbox";
 
 function CreateCourseScreen({navigation}) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-
+    const [selectedEvents, setSelectedEvents] = useState([]); // État pour stocker les événements sélectionnés
+    const [availableEvents, setAvailableEvents] = useState([]); // État pour stocker les événements disponibles
+    useEffect(() => {
+        // Récupérer les événements disponibles à partir du service EventStorage lors du montage du composant
+        const eventStorage = new EventStorage();
+        eventStorage.getAll().then(events => {
+            setAvailableEvents(events);
+        }).catch(error => {
+            console.error("Erreur lors de la récupération des événements :", error);
+        });
+    }, []);
+    // Fonction pour gérer la sélection des événements
+    const handleEventSelection = (eventId) => {
+        if (selectedEvents.includes(eventId)) {
+            setSelectedEvents(selectedEvents.filter(id => id !== eventId)); // Si l'événement est déjà sélectionné, le supprimer de la liste
+        } else {
+            setSelectedEvents([...selectedEvents, eventId]); // Sinon, l'ajouter à la liste
+        }
+    }
     const isPublished = {
         isPublished: false,
     }
@@ -55,7 +74,7 @@ function CreateCourseScreen({navigation}) {
         courseService.create(course).then((response) => {
             if (response.id != null){
                 console.log(response)
-                navigation.navigate("UserEvent");
+                navigation.navigate("UserCourse");
                 return
             }
             alert("Le parcours n'a pas été crée :)")
@@ -75,6 +94,20 @@ function CreateCourseScreen({navigation}) {
                 multiline={true}
                 numberOfLines={10}
             />
+            <Label name="Les évenements" />
+            <Text>Liste des événements disponibles:</Text>
+            <ScrollView>
+                {availableEvents.map((event, index) => (
+                    <View key={index}>
+                        <CheckBox
+                            value={selectedEvents.includes(event.id)}
+                            onValueChange={() => handleEventSelection(event.id)}
+                        />
+                        <Text>{event.title}</Text>
+                        <Text>{event.description}</Text>
+                    </View>
+                ))}
+            </ScrollView>
             <TouchableOpacity style={componentStyles.btn} onPress={onSubmit}>
                 <Text style={componentStyles.btnText}>Créer</Text>
             </TouchableOpacity>

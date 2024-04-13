@@ -16,7 +16,7 @@ export default class Course {
 
         if (Array.isArray(courseData.events)){
             this.events = courseData.events.map((event: any): Event => {
-                return new Event(event.name);
+                return (new Event()).format(event);
             })
         }
 
