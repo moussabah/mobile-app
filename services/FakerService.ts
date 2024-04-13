@@ -15,7 +15,7 @@ export default class FakerService {
         event.email = faker.internet.email();
         event.price = faker.number.int(200);
         event.address =  faker.location.streetAddress();
-        event.setGeolocation(faker.location.latitude({max: 10}), faker.location.latitude({max: 10}));
+        event.setGeolocation(faker.location.latitude({max: 46, min: 40}), faker.location.latitude({max: 6}));
         return event;
     }
 
