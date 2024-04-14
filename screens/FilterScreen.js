@@ -6,29 +6,28 @@ import FakerService from "../services/FakerService";
 import {Picker} from "@react-native-picker/picker";
 
 function FilterScreen({navigation}) {
-
-    const [keyword, setKeyword] = useState("");
-    const [theme, setTheme] = useState("");
-    const [location, setLocation] = useState("");
-    const [date, setDate] = useState("");
-    const [editionSelected, setEditionSelected] = useState(null);
+    const [criteria, setCriteria] = useState({
+        keyword: '',
+        theme:'',
+        date: '',
+        location:'',
+        edition: null,
+    });
     const fakerService = new FakerService();
     const editions = useMemo(() => {
         return fakerService.getEditions();
     }, [])
-
     const onFilter = () => {
-        navigation.navigate("EventScreen", {
-            keyword,
-            theme,
-            location,
-            date,
-        })
+        criteria.name =
+        navigation.navigate("EventScreen", criteria)
     }
 
-    const onSelectEdition = (value) => {
-        setEditionSelected(value)
-    };
+    const onSetCriteria = (name, value) => {
+        setCriteria({
+            ...criteria,
+            [name]:value
+        })
+    }
     return (
         <ScrollView style={componentsStyles.container}>
             <Label name="Édition:" />
@@ -36,7 +35,7 @@ function FilterScreen({navigation}) {
                 <Picker
                     style={componentsStyles.picker}
                     selectedValue={null}
-                    onValueChange={onSelectEdition}
+                    onValueChange={(value) => onSetCriteria('edition', value)}
                 >
                     {
                         editions.map(edition => {
@@ -46,13 +45,13 @@ function FilterScreen({navigation}) {
                 </Picker>
             </View>
             <Label name="Mots clés:" />
-            <CustomInput placeholder={"Ex: Danse, Voyage, Fête"} onChange={(value) => setKeyword(value)}/>
+            <CustomInput placeholder={"Ex: Danse, Voyage, Fête"} onChange={(value) => onSetCriteria('keyword', value)}/>
             <Label name="Thème:" />
-            <CustomInput placeholder={"Ex: Conférence"} onChange={(value) => setTheme(value)}/>
+            <CustomInput placeholder={"Ex: Conférence"} onChange={(value) => onSetCriteria('theme', value)}/>
             <Label name="Lieu:" />
-            <CustomInput placeholder={"Ex: Rennes"} onChange={(value) => setLocation(value)}/>
+            <CustomInput placeholder={"Ex: Rennes"} onChange={(value) => onSetCriteria('location', value)}/>
             <Label name="Date:" />
-            <CustomInput placeholder={"DD/MM/YYYY"} onChange={(value) => setDate(value)}/>
+            <CustomInput placeholder={"DD/MM/YYYY"} onChange={(value) => onSetCriteria('date', value)}/>
             <View style={componentsStyles.searchBtn}>
                 <Button title={"Rechercher"} onPress={onFilter}/>
             </View>
