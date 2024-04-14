@@ -18,8 +18,9 @@ function FilterScreen({navigation}) {
         return fakerService.getEditions();
     }, [])
     const onFilter = () => {
-        criteria.name =
-        navigation.navigate("EventScreen", criteria)
+        navigation.navigate("EventScreen", {
+            criteria,
+        })
     }
 
     const onSetCriteria = (name, value) => {

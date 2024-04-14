@@ -7,8 +7,8 @@ import Tag from "../components/Tag";
 
 function ListEventScreen({route, navigation}) {
     const params = route.params;
-    if (params !== undefined){
-        FilterService.filterByCriteria([], params);
+    if (params !== undefined && params.criteria != null){
+        FilterService.filterByCriteria(params.criteria);
     }
     const tags = ["Tout", "Informatique", "Science", "Programmation", "IA", "École", "Business"]
     const [activeTag, setActiveTag] = useState(null);
