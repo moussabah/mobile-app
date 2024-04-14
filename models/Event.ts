@@ -19,6 +19,7 @@ export default class Event {
     public postalCode?:string;
     public tags: Tag[] = [];
     public geolocation?: Geolocation;
+    public isPublished = false;
 
 
     format(eventData: any): Event {
@@ -35,6 +36,7 @@ export default class Event {
         this.address = eventData.address ?? null;
         this.descriptionFr = eventData.descriptionFr ?? null;
         this.imageUrl = eventData.imageUrl ?? null;
+        this.isPublished = eventData.isPublished ?? false;
 
         if (Array.isArray(eventData.tags)){
             this.tags = eventData.tags.map((tag: any): Tag => {

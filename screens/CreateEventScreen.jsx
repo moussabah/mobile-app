@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Switch, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {Styles} from "../assets/styles/Styles";
 import CustomInput from "../components/CustomInput";
 import {Label} from "../components/Label";
@@ -17,7 +17,7 @@ function CreateEventScreen({route, navigation}) {
     const tagService = new TagService();
 
     let eventFromUser = null;
-    if (route.params && route.params.event){
+    if (route.params && route.params.event) {
         eventFromUser = route.params.event;
     }
     console.log({eventFromUser})
@@ -33,6 +33,7 @@ function CreateEventScreen({route, navigation}) {
     const [price, setPrice] = useState(eventFromUser?.price && 0);
     const [tags, setTags] = useState(tagService.arrayToString(eventFromUser?.tags));
     const [image, setImage] = useState(eventFromUser?.imageUrl || null);
+    const [isPublished, setIsPublished] = useState(eventFromUser?.isPublished || false);
 
     const onChange = (name, value) => {
         switch (name) {
@@ -78,20 +79,21 @@ function CreateEventScreen({route, navigation}) {
         event.dateEnd = dateEnd;
         event.postalCode = postalCode;
         event.imageUrl = image;
+        event.isPublished = isPublished;
         const eventValidator = new EventValidator();
         const errors = eventValidator.validate(event);
-        if (errors != null){
+        if (errors != null) {
             alert(errors);
             return;
         }
         const eventsTag = tagService.format(tags);
-        if (eventsTag != null){
+        if (eventsTag != null) {
             event.tags = eventsTag;
         }
         let eventService = new EventService();
-        if (eventFromUser ==  null){
+        if (eventFromUser == null) {
             eventService.create(event).then((response) => {
-                if (response.id != null){
+                if (response.id != null) {
                     console.log(response)
                     navigation.navigate("UserEvent");
                     return
@@ -107,20 +109,23 @@ function CreateEventScreen({route, navigation}) {
     }
 
     const onLoadImage = async () => {
-      const result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          aspect: [4, 3],
-          quality: 1,
-          allowsMultipleSelection: false,
-      });
-      if (!result.canceled){
-          setImage(result.assets[0].uri)
-      }
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            aspect: [4, 3],
+            quality: 1,
+            allowsMultipleSelection: false,
+        });
+        if (!result.canceled) {
+            setImage(result.assets[0].uri)
+        }
     };
 
+    const toggleSwitch = (value) => {
+        setIsPublished(value);
+    };
     return (
         <ScrollView style={{...Styles.container, ...{paddingHorizontal: 15, paddingVertical: 10,}}}>
-            <Label name="Nom de l'événement:" />
+            <Label name="Nom de l'événement:"/>
             <CustomInput value={name} onChange={(value) => onChange("name", value)}/>
             <Label name="Adresse:"/>
             <CustomInput value={address} onChange={(value) => onChange("address", value)}/>
@@ -131,7 +136,7 @@ function CreateEventScreen({route, navigation}) {
             <Label name="Mots clés:"/>
             <CustomInput value={tags} placeholder={"Ex: Danse, Dessin, etc."} onChange={(value) => setTags(value)}/>
             <View style={{flexDirection: "row", alignItems: "baseline"}}>
-                <Label name="Prix (€):  " />
+                <Label name="Prix (€):  "/>
                 <Text style={{fontSize: 18}}>Gratuit: </Text>
                 <CheckBox
                     style={{marginTop: 10}}
@@ -140,28 +145,38 @@ function CreateEventScreen({route, navigation}) {
                     onValueChange={(newValue) => setIsFree(newValue)}
                 />
             </View>
-            <CustomInput value={price} keyboardType="numeric"  disbale={isFree} onChange={(value) => onChange("price", value)}/>
+            <CustomInput value={price} keyboardType="numeric" disbale={isFree}
+                         onChange={(value) => onChange("price", value)}/>
             <Label name="Date de début:"/>
-            <CustomInput value={dateBegin} placeholder={"Ex: 01/12/2023"} onChange={(value) => onChange("dateBegin", value)}/>
-            <Label name="Date de fin:" />
-            <CustomInput value={dateEnd} placeholder={"Ex: 31/12/2023"} onChange={(value) => onChange("dateEnd", value)}/>
+            <CustomInput value={dateBegin} placeholder={"Ex: 01/12/2023"}
+                         onChange={(value) => onChange("dateBegin", value)}/>
+            <Label name="Date de fin:"/>
+            <CustomInput value={dateEnd} placeholder={"Ex: 31/12/2023"}
+                         onChange={(value) => onChange("dateEnd", value)}/>
             <TouchableOpacity style={componentStyles.uploadBtn} onPress={onLoadImage}>
                 <Text style={componentStyles.uploadBtnText}>Charger une image</Text>
-                <MaterialCommunityIcons name="image" size={30} />
+                <MaterialCommunityIcons name="image" size={30}/>
             </TouchableOpacity>
-            {image && <Image resizeMode={'contain'} height={200} source={{uri: image}} />}
-            <Label name="Description" />
+            {image && <Image resizeMode={'contain'} height={200} source={{uri: image}}/>}
+            <Label name="Description"/>
             <TextInput
                 value={description}
                 onChangeText={(value) => onChange("description", value)}
                 style={componentStyles.textArea}
                 multiline={true}
                 numberOfLines={10}
-                />
+            />
+            <View style={componentStyles.switchContainer}>
+                <Text style={componentStyles.switchText}>Publié ? </Text>
+                <Switch trackColor={{false: '#767577', true: '#81b0ff'}}
+                        thumbColor={isPublished ? '#000000' : '#f4f3f4'}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={toggleSwitch}
+                        value={isPublished}/>
+            </View>
             <TouchableOpacity style={componentStyles.btn} onPress={onSubmit}>
-                <Text style={componentStyles.btnText}>{eventFromUser != null ? 'Mettre à jour':'créer'}</Text>
+                <Text style={componentStyles.btnText}>{eventFromUser != null ? 'Mettre à jour' : 'créer'}</Text>
             </TouchableOpacity>
-
         </ScrollView>
     );
 }
@@ -171,14 +186,14 @@ const componentStyles = StyleSheet.create({
     btn: {
         backgroundColor: Colors.primary,
         padding: 10,
-        justifyContent:"center",
-        alignItems:"center",
+        justifyContent: "center",
+        alignItems: "center",
         marginVertical: 10,
         borderRadius: 8,
         marginBottom: 10,
     },
     btnText: {
-      fontSize: 18,
+        fontSize: 18,
         color: "white"
     },
     textArea: {
@@ -186,22 +201,30 @@ const componentStyles = StyleSheet.create({
         borderColor: "#afafaf",
         borderRadius: 10,
         backgroundColor: "rgba(255,255,255,0.75)",
-        textAlignVertical:"top",
+        textAlignVertical: "top",
         padding: 10,
         fontSize: 18,
     },
-    uploadBtn:{
+    uploadBtn: {
         borderWidth: 1,
         flexDirection: "row",
         paddingHorizontal: 10,
-        justifyContent:"space-between",
+        justifyContent: "space-between",
         paddingVertical: 5,
-        alignItems:"center",
+        alignItems: "center",
         marginVertical: 10,
         borderRadius: 10,
     },
     uploadBtnText: {
         fontSize: 18
+    },
+    switchText: {
+        fontSize: 18,
+        fontWeight: "bold"
+    },
+    switchContainer: {
+        flexDirection: "row",
+        alignItems: "center"
     }
 })
 
