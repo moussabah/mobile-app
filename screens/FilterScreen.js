@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {Button, ScrollView, StyleSheet, Text, View} from "react-native";
-import {Styles} from "../assets/styles/Styles";
+import {Button, ScrollView, StyleSheet, View} from "react-native";
 import CustomInput from "../components/CustomInput";
 import {Label} from "../components/Label";
 
@@ -21,8 +20,7 @@ function FilterScreen({navigation}) {
     }
 
     return (
-        <ScrollView style={Styles.container}>
-
+        <ScrollView style={componentsStyles.container}>
             <Label name="Mots clés:" />
             <CustomInput placeholder={"Ex: Danse, Voyage, Fête"} onChange={(value) => setKeyword(value)}/>
             <Label name="Thème:" />
@@ -31,11 +29,22 @@ function FilterScreen({navigation}) {
             <CustomInput placeholder={"Ex: Rennes"} onChange={(value) => setLocation(value)}/>
             <Label name="Date:" />
             <CustomInput placeholder={"DD/MM/YYYY"} onChange={(value) => setDate(value)}/>
-            <View style={{paddingHorizontal: 40, paddingVertical: 20}}>
+            <View style={componentsStyles.searchBtn}>
                 <Button title={"Rechercher"} onPress={onFilter}/>
             </View>
         </ScrollView>
     );
 }
+
+
+const componentsStyles = StyleSheet.create({
+    container: {
+        paddingHorizontal: 15,
+    },
+    searchBtn: {
+        paddingHorizontal: 40,
+        paddingVertical: 20
+    }
+})
 
 export default FilterScreen;
