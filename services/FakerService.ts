@@ -2,6 +2,10 @@ import Event from "../models/Event";
 import {faker} from "@faker-js/faker";
 
 export default class FakerService {
+
+
+    static EDITION_SIZE = 10;
+
     getEvent():Event{
         const event = new Event();
         event.id = faker.number.int(100);
@@ -26,5 +30,16 @@ export default class FakerService {
             events.push(this.getEvent());
         }
         return events;
+    }
+
+    getEditions(): {label: string, value: number}[]{
+        const editions = [];
+        for (let i = 0; i < FakerService.EDITION_SIZE; i++) {
+            editions.push({
+                label: faker.lorem.words(3),
+                value: i,
+            })
+        }
+        return editions;
     }
 }
