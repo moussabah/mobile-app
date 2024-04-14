@@ -9,7 +9,9 @@ function UserEventCart({event, onDelete, onBrowse, navigation}) {
     return (
         <View style={componentStyles.container}>
             <View style={componentStyles.leftSide}>
-                <Text style={componentStyles.title}>{event.name}</Text>
+                <Text style={componentStyles.title}>
+                    {event.isPublished && <MaterialCommunityIcons color={"green"} name="check-circle" size={23} />} {event.name}
+                </Text>
                 <Text style={componentStyles.description}>{event.description}</Text>
             </View>
             <View style={componentStyles.rightSide}>

@@ -4,6 +4,8 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import ListEventScreen from "./ListEventScreen";
 import { getHeaderTitle } from '@react-navigation/elements';
 import EventListHeader from "../components/EventListHeader";
+import CardScreen from "./CardScreen";
+import MapViewScreen from "./MapViewScreen";
 
 const Tab = createBottomTabNavigator();
 export default function BottomTab({navigation}) {
@@ -28,8 +30,8 @@ export default function BottomTab({navigation}) {
 
                 }
             }/>
-            <Tab.Screen name="MapScreen" component={FilterScreen} options={{
-                title: 'Filtre', tabBarLabel: "Carte",
+            <Tab.Screen name="MapScreen" component={MapViewScreen} options={{
+                title: 'Carte des événements', tabBarLabel: "Carte",
                 tabBarIcon: ({color, size}) => (
                     <MaterialCommunityIcons name="map" color={color} size={size}/>
                 ),
