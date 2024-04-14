@@ -1,18 +1,19 @@
 import React, {useMemo, useState} from 'react';
-import {Button, ScrollView, StyleSheet, View} from "react-native";
+import {Button, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import CustomInput from "../components/CustomInput";
 import {Label} from "../components/Label";
 import FakerService from "../services/FakerService";
 import {Picker} from "@react-native-picker/picker";
 
 function FilterScreen({navigation}) {
-    const [criteria, setCriteria] = useState({
+    const initState = {
         keyword: '',
         theme:'',
         date: '',
         location:'',
         edition: null,
-    });
+    };
+    const [criteria, setCriteria] = useState(initState);
     const fakerService = new FakerService();
     const editions = useMemo(() => {
         return fakerService.getEditions();
@@ -28,14 +29,25 @@ function FilterScreen({navigation}) {
             ...criteria,
             [name]:value
         })
+        console.log(criteria)
     }
     return (
         <ScrollView style={componentsStyles.container}>
-            <Label name="Édition:" />
+            <View style={componentsStyles.editionContainer}>
+                <Label name="Édition:" />
+                <TouchableOpacity onPress={() => {
+                    console.log("OOKK")
+                    setCriteria(initState)
+                }}>
+                    <Text style={componentsStyles.clearBtn}>
+                        Tout effacer
+                    </Text>
+                </TouchableOpacity>
+            </View>
             <View style={componentsStyles.pickerContainer}>
                 <Picker
                     style={componentsStyles.picker}
-                    selectedValue={null}
+                    selectedValue={criteria.edition}
                     onValueChange={(value) => onSetCriteria('edition', value)}
                 >
                     {
@@ -46,13 +58,13 @@ function FilterScreen({navigation}) {
                 </Picker>
             </View>
             <Label name="Mots clés:" />
-            <CustomInput placeholder={"Ex: Danse, Voyage, Fête"} onChange={(value) => onSetCriteria('keyword', value)}/>
+            <CustomInput value={criteria.keyword} placeholder={"Ex: Danse, Voyage, Fête"} onChange={(value) => onSetCriteria('keyword', value)}/>
             <Label name="Thème:" />
-            <CustomInput placeholder={"Ex: Conférence"} onChange={(value) => onSetCriteria('theme', value)}/>
+            <CustomInput value={criteria.theme} placeholder={"Ex: Conférence"} onChange={(value) => onSetCriteria('theme', value)}/>
             <Label name="Lieu:" />
-            <CustomInput placeholder={"Ex: Rennes"} onChange={(value) => onSetCriteria('location', value)}/>
+            <CustomInput value={criteria.location} placeholder={"Ex: Rennes"} onChange={(value) => onSetCriteria('location', value)}/>
             <Label name="Date:" />
-            <CustomInput placeholder={"DD/MM/YYYY"} onChange={(value) => onSetCriteria('date', value)}/>
+            <CustomInput value={criteria.date} placeholder={"DD/MM/YYYY"} onChange={(value) => onSetCriteria('date', value)}/>
             <View style={componentsStyles.searchBtn}>
                 <Button title={"Rechercher"} onPress={onFilter}/>
             </View>
@@ -82,6 +94,15 @@ const componentsStyles = StyleSheet.create({
     },
     pickerItem:{
         fontSize: 18,
+    },
+    clearBtn: {
+        fontSize: 15,
+        color: "red"
+    },
+    editionContainer: {
+        flexDirection:"row",
+        alignItems:"baseline",
+        justifyContent:"space-between"
     }
 })
 
