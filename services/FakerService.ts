@@ -32,12 +32,12 @@ export default class FakerService {
         return events;
     }
 
-    getEditions(): {label: string, value: number}[]{
+    getEditions(): {label: string, value: string}[]{
         const editions = [];
         for (let i = 0; i < FakerService.EDITION_SIZE; i++) {
             editions.push({
                 label: faker.lorem.words(3),
-                value: i,
+                value: `${i}`,
             })
         }
         return editions;
