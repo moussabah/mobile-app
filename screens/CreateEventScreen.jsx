@@ -20,18 +20,19 @@ function CreateEventScreen({route, navigation}) {
     if (route.params && route.params.event){
         eventFromUser = route.params.event;
     }
+    console.log({eventFromUser})
 
-    const [name, setName] = useState(eventFromUser?.name && "");
-    const [address, setAddress] = useState(eventFromUser?.address && "");
-    const [email, setEmail] = useState(eventFromUser?.email && "");
+    const [name, setName] = useState(eventFromUser?.name || "");
+    const [address, setAddress] = useState(eventFromUser?.address || "");
+    const [email, setEmail] = useState(eventFromUser?.email || "");
     const [isFree, setIsFree] = useState(eventFromUser?.isFree || false);
-    const [dateBegin, setDateBegin] = useState(eventFromUser?.dateBegin && "");
-    const [dateEnd, setDateEnd] = useState(eventFromUser?.dateEnd && "");
-    const [description, setDescription] = useState(eventFromUser?.description && "");
-    const [postalCode, setPostalCode] = useState(eventFromUser?.postalCode && null);
+    const [dateBegin, setDateBegin] = useState(eventFromUser?.dateBegin || "");
+    const [dateEnd, setDateEnd] = useState(eventFromUser?.dateEnd || "");
+    const [description, setDescription] = useState(eventFromUser?.description || "");
+    const [postalCode, setPostalCode] = useState(eventFromUser?.postalCode || null);
     const [price, setPrice] = useState(eventFromUser?.price && 0);
     const [tags, setTags] = useState(tagService.arrayToString(eventFromUser?.tags));
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState(eventFromUser?.imageUrl || null);
 
     const onChange = (name, value) => {
         switch (name) {
@@ -76,7 +77,7 @@ function CreateEventScreen({route, navigation}) {
         event.dateBegin = dateBegin;
         event.dateEnd = dateEnd;
         event.postalCode = postalCode;
-
+        event.imageUrl = image;
         const eventValidator = new EventValidator();
         const errors = eventValidator.validate(event);
         if (errors != null){

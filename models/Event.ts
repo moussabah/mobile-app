@@ -34,6 +34,7 @@ export default class Event {
         this.postalCode = eventData.postalCode ?? null;
         this.address = eventData.address ?? null;
         this.descriptionFr = eventData.descriptionFr ?? null;
+        this.imageUrl = eventData.imageUrl ?? null;
 
         if (Array.isArray(eventData.tags)){
             this.tags = eventData.tags.map((tag: any): Tag => {
