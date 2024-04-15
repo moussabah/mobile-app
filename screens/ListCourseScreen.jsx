@@ -1,9 +1,10 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Styles} from "../assets/styles/Styles";
 import {Button, FlatList, ScrollView, StyleSheet, TextInput, View} from "react-native";
 import FilterService from "../services/FilterService";
 import Tag from "../components/Tag";
 import CourseCard from "../components/CourseCard";
+import CourseStorage from "../services/storages/CourseStorage";
 
 function ListCourseScreen({route, navigation}) {
     const params = route.params;
@@ -13,13 +14,28 @@ function ListCourseScreen({route, navigation}) {
     const tags = ["Tout", "Parcours1", "Parcours2"];
     const [activeTag, setActiveTag] = useState(null);
 
+
+
+    const [availableCourses, setAvailableCourses] = useState([]);
+    useEffect(() => {
+        const courseStorage = new CourseStorage();
+        courseStorage.getAll().then(courses => {
+            setAvailableCourses(courses);
+        }).catch(error => {
+            console.error("Erreur lors de la récupération des parcours :", error);
+        });
+    }, []);
+
+
+
     const data = useMemo(() => {
         const tab = []
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 3; i++) {
             tab[i] = {id: i};
         }
         return tab
     }, [])
+
     function tagHandler(i) {
         setActiveTag(i)
     }
@@ -42,10 +58,10 @@ function ListCourseScreen({route, navigation}) {
                 {tagsItems()}
             </ScrollView>
             <Button title={'CreateCourseScreen'} onPress={onSubmit}/>
-            <FlatList data={data}
+            <FlatList data={availableCourses}
               keyExtractor={(item, index) => item + index}
               renderItem={({item}) => (
-                  <CourseCard event={item} navigation={navigation}/>
+                  <CourseCard course={item} navigation={navigation}/>
               )}
             />
         </View>

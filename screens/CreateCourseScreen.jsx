@@ -4,13 +4,12 @@ import Course from "../models/Course";
 import CourseValidator from "../services/CourseValidator";
 import CourseService from "../services/CourseService";
 import componentStyles from "./CSS/styles";
-import {ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {Styles} from "../assets/styles/Styles";
 import {Label} from "../components/Label";
 import CustomInput from "../components/CustomInput";
 import EventStorage from "../services/storages/EventStorage";
 import CheckBox from "expo-checkbox";
-import {Colors} from "../assets/styles/Colors";
 
 function CreateCourseScreen({navigation}) {
     const [title, setTitle] = useState("");
@@ -75,7 +74,7 @@ function CreateCourseScreen({navigation}) {
         courseService.create(course).then((response) => {
             if (response.id != null){
                 console.log(response)
-                navigation.navigate("UserCourse");
+                navigation.navigate("UserCourseScreen");
                 return
             }
             alert("Le parcours n'a pas été crée :)")
@@ -96,7 +95,7 @@ function CreateCourseScreen({navigation}) {
                 numberOfLines={10}
             />
             <Label name="Les évenements" />
-            <Text> Selectionner des events </Text>
+            <Text>Liste des événements disponibles:</Text>
             <ScrollView>
                 {availableEvents.map((event, index) => (
                     <View key={index}>
@@ -110,34 +109,17 @@ function CreateCourseScreen({navigation}) {
                 ))}
             </ScrollView>
             <TouchableOpacity style={componentStyles.btn} onPress={onSubmit}>
-                <Text style={componentStyles.btnText}>Créer</Text>
+                <Text style={componentStyles.btnText}> Créer </Text>
             </TouchableOpacity>
+
+            <Label name="Published"/>
+            <CheckBox
+                value={isPublished}
+                onValueChange={() => true}
+            />
 
         </ScrollView>
     );
 }
-const componentStyles = StyleSheet.create({
-    btn: {
-        backgroundColor: Colors.primary,
-        padding: 10,
-        justifyContent:"center",
-        alignItems:"center",
-        marginVertical: 10,
-        borderRadius: 8,
-        marginBottom: 10,
-    },
-    btnText: {
-        fontSize: 18,
-        color: "white"
-    },
-    textArea: {
-        borderWidth: 1,
-        borderColor: "#afafaf",
-        borderRadius: 10,
-        backgroundColor: "rgba(255,255,255,0.75)",
-        textAlignVertical:"top",
-        padding: 10,
-        fontSize: 18,
-    }
-});
+componentStyles;
 export default CreateCourseScreen;
