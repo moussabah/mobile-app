@@ -5,6 +5,7 @@ export const config =  {
         createEvent: `${domain}/event/create`,
         rateEvent: `${domain}/event/rate/{id}`,
         filterBySearch: `${domain}/search/{query}`,
-        filterByCriteria: `${domain}/search/criteria`
+        filterByCriteria: `${domain}/search/criteria`,
+        createCourse: `${domain}/course/create`
     },
 }
