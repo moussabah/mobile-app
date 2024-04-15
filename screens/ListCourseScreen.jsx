@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import {Styles} from "../assets/styles/Styles";
-import {FlatList, ScrollView, StyleSheet, TextInput, View} from "react-native";
+import {Button, FlatList, ScrollView, StyleSheet, TextInput, View} from "react-native";
 import FilterService from "../services/FilterService";
 import Tag from "../components/Tag";
 import CourseCard from "../components/CourseCard";
@@ -32,13 +32,16 @@ function ListCourseScreen({route, navigation}) {
         return tagsItems;
     }
 
-
+    const onSubmit = () => {
+      navigation.navigate("CreateCourseScreen");
+    }
     return (
         <View style={Styles.container}>
             <TextInput style={{...Styles.input, ...eventStyles.input}} placeholder={"Recherche"}/>
             <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={eventStyles.tagContainer}>
                 {tagsItems()}
             </ScrollView>
+            <Button title={'CreateCourseScreen'} onPress={onSubmit}/>
             <FlatList data={data}
               keyExtractor={(item, index) => item + index}
               renderItem={({item}) => (

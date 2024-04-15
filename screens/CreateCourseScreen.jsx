@@ -4,20 +4,20 @@ import Course from "../models/Course";
 import CourseValidator from "../services/CourseValidator";
 import CourseService from "../services/CourseService";
 import componentStyles from "./CSS/styles";
-import {ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {Styles} from "../assets/styles/Styles";
 import {Label} from "../components/Label";
 import CustomInput from "../components/CustomInput";
 import EventStorage from "../services/storages/EventStorage";
 import CheckBox from "expo-checkbox";
+import {Colors} from "../assets/styles/Colors";
 
 function CreateCourseScreen({navigation}) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [selectedEvents, setSelectedEvents] = useState([]); // État pour stocker les événements sélectionnés
-    const [availableEvents, setAvailableEvents] = useState([]); // État pour stocker les événements disponibles
+    const [selectedEvents, setSelectedEvents] = useState([]);
+    const [availableEvents, setAvailableEvents] = useState([]);
     useEffect(() => {
-        // Récupérer les événements disponibles à partir du service EventStorage lors du montage du composant
         const eventStorage = new EventStorage();
         eventStorage.getAll().then(events => {
             setAvailableEvents(events);
@@ -28,11 +28,12 @@ function CreateCourseScreen({navigation}) {
     // Fonction pour gérer la sélection des événements
     const handleEventSelection = (eventId) => {
         if (selectedEvents.includes(eventId)) {
-            setSelectedEvents(selectedEvents.filter(id => id !== eventId)); // Si l'événement est déjà sélectionné, le supprimer de la liste
+            setSelectedEvents(selectedEvents.filter(id => id !== eventId));
         } else {
-            setSelectedEvents([...selectedEvents, eventId]); // Sinon, l'ajouter à la liste
+            setSelectedEvents([...selectedEvents, eventId]);
         }
     }
+
     const isPublished = {
         isPublished: false,
     }
@@ -95,7 +96,7 @@ function CreateCourseScreen({navigation}) {
                 numberOfLines={10}
             />
             <Label name="Les évenements" />
-            <Text>Liste des événements disponibles:</Text>
+            <Text> Selectionner des events </Text>
             <ScrollView>
                 {availableEvents.map((event, index) => (
                     <View key={index}>
@@ -115,5 +116,28 @@ function CreateCourseScreen({navigation}) {
         </ScrollView>
     );
 }
-componentStyles;
+const componentStyles = StyleSheet.create({
+    btn: {
+        backgroundColor: Colors.primary,
+        padding: 10,
+        justifyContent:"center",
+        alignItems:"center",
+        marginVertical: 10,
+        borderRadius: 8,
+        marginBottom: 10,
+    },
+    btnText: {
+        fontSize: 18,
+        color: "white"
+    },
+    textArea: {
+        borderWidth: 1,
+        borderColor: "#afafaf",
+        borderRadius: 10,
+        backgroundColor: "rgba(255,255,255,0.75)",
+        textAlignVertical:"top",
+        padding: 10,
+        fontSize: 18,
+    }
+});
 export default CreateCourseScreen;
