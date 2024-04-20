@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from "react-native";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 function CourseCard({course,navigation}) {
     const onPressHandler = () => {
@@ -11,8 +12,12 @@ function CourseCard({course,navigation}) {
     return (
         <TouchableOpacity style={styles.container} onPress={onPressHandler}>
             <View>
-                <View>
+                <View style={{flexDirection:"row", justifyContent:"space-between", marginTop: 5,}}>
                     <Text style={styles.title}>{course.title}</Text>
+                    <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center"}}>
+                        <MaterialIcons name="event" size={24} color="red" />
+                        <Text style={{marginLeft: 3, fontSize: 18}}>({course.events.length})</Text>
+                    </View>
                 </View>
                 <View style={styles.description}>
                     <Text>{course.description}</Text>
