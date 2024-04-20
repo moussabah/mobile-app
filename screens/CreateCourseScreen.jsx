@@ -15,6 +15,8 @@ import {Picker} from "@react-native-picker/picker";
 import styles from "./CSS/styles";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {assertSourceType} from "@babel/core/lib/config/validation/option-assertions";
+import {Tag} from "../models/Tag";
+import tag from "../components/Tag";
 
 function CreateCourseScreen({navigation}) {
     const initialData = {
@@ -56,6 +58,13 @@ function CreateCourseScreen({navigation}) {
         }
     }
 
+    const onSetCourse  = (name, value) => {
+        setCourses({
+            ...courses,
+            [name]:value,
+        })
+    }
+
     const initData = () => {
         const courseService = new CourseService();
         const eventStorage = new EventStorage();
@@ -71,47 +80,8 @@ function CreateCourseScreen({navigation}) {
     }
     const [tags, setTags] = useState("");
 
-    const onChange = (name, value) => {
-        switch (name) {
-            case "title":
-                setTitle(value);
-                break;
-            case "description":
-                setDescription(value);
-                break;
-            case "tags":
-                setTags(value)
-                break;
-        }
-    }
-
-    const onSubmit = (value) => {
-        const tagService = new TagService();
-        const course = new Course();
-
-        course.title = title;
-        course.description = description;
-        course.isPublished = isPublished;
-
-        const courseValidator = new CourseValidator();
-        const errors = courseValidator.validate(course);
-        if (errors != null){
-            alert(errors);
-            return;
-        }
-        const coursesTag = tagService.format(tags);
-        if (coursesTag != null){
-            course.tags = coursesTag;
-        }
-        let courseService = new CourseService();
-        courseService.create(course).then((response) => {
-            if (response.id != null){
-                console.log(response)
-                navigation.navigate("UserCourseScreen");
-                return
-            }
-            alert("Le parcours n'a pas été crée :)")
-        });
+    const onSubmit = () => {
+        console.log(courses)
     }
 
 
@@ -139,6 +109,17 @@ function CreateCourseScreen({navigation}) {
         return selected;
     }
 
+    const onSetTag = (value) => {
+        let tags = [];
+        if (value.trim().length !== 0){
+            tags = value.split(',').map(name => new Tag(name))
+        }
+        setCourses({
+            ...courses,
+            tags,
+        })
+    }
+
     return (
         <ScrollView style={{...Styles.container, ...{paddingHorizontal: 15, paddingVertical: 10,}}}>
             <View style={Styles.pickerContainer}>
@@ -159,20 +140,20 @@ function CreateCourseScreen({navigation}) {
                 </ScrollView>
             )}
             <Label name="Titre du parcours:" />
-            <CustomInput onChange={(value) => onChange("title", value)}/>
+            <CustomInput onChange={(value) => onSetCourse("title", value)}/>
             <Label name="Mots clés:" />
-            <CustomInput placeholder={"Ex: test, test, etc."} onChange={(value) => setTags(value)}/>
+            <CustomInput placeholder={"Ex: test, test, etc."} onChange={(value) => onSetTag(value)}/>
             <Label name="Description" />
             <TextInput
-                onChangeText={(value) => onChange("description", value)}
+                onChangeText={(value) => onSetCourse("description", value)}
                 style={componentStyles.textArea}
                 multiline={true}
                 numberOfLines={10}
             />
             <Label name="Published"/>
             <CheckBox
-                value={isPublished}
-                onValueChange={() => true}
+                value={courses.isPublished}
+                onValueChange={(value) => onSetCourse('isPublished', value)}
             />
             <TouchableOpacity style={componentStyles.btn} onPress={onSubmit}>
                 <Text style={componentStyles.btnText}> Créer </Text>
