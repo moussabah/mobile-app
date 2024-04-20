@@ -3,8 +3,8 @@ import {Picker} from "@react-native-picker/picker";
 import {View, StyleSheet} from "react-native";
 import FakerService from "../services/FakerService";
 
-function EditionComponent({onPick}) {
-
+function EditionComponent(props) {
+    const {onPick, style} = props;
     const fakerService = new FakerService();
     const [value, setValue] = useState(null);
 
@@ -18,7 +18,7 @@ function EditionComponent({onPick}) {
     }
 
     return (
-        <View style={styles.pickerContainer}>
+        <View style={{...styles.pickerContainer, ...style}}>
             <Picker
                 style={styles.picker}
                 selectedValue={value}
