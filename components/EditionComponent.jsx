@@ -26,7 +26,7 @@ function EditionComponent(props) {
             >
                 {
                     editions.map(edition => {
-                        return <Picker.Item style={styles.pickerItem} key={edition.value} label={edition.label} value={edition.value} />
+                        return <Picker.Item style={styles.pickerItem} key={edition.value} label={edition.label} value={edition} />
                     })
                 }
             </Picker>

@@ -27,7 +27,7 @@ export default function BottomTab({navigation}) {
                     ),
                     header:({ navigation, route, options, back }) => {
                         const title = getHeaderTitle(options, route.name)
-                        return <EventListHeader title={title} action={() => navigation.navigate("CreateEventScreen")} />
+                        return <EventListHeader title={title} navigation={navigation} />
                     }
 
                 }
