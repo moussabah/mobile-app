@@ -6,6 +6,8 @@ import { getHeaderTitle } from '@react-navigation/elements';
 import EventListHeader from "../components/EventListHeader";
 import CardScreen from "./CardScreen";
 import MapViewScreen from "./MapViewScreen";
+import {View} from "react-native";
+import EditionComponent from "../components/EditionComponent";
 
 const Tab = createBottomTabNavigator();
 export default function BottomTab({navigation}) {
@@ -18,7 +20,7 @@ export default function BottomTab({navigation}) {
         >
             <Tab.Screen name="EventScreen" component={ListEventScreen} options={
                 {
-                    title: 'Liste des événements',
+                    title: 'Events',
                     tabBarLabel: "Evenements",
                     tabBarIcon: ({color, size}) => (
                         <MaterialCommunityIcons name="calendar" color={color} size={size}/>

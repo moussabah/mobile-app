@@ -4,6 +4,7 @@ import CustomInput from "../components/CustomInput";
 import {Label} from "../components/Label";
 import FakerService from "../services/FakerService";
 import {Picker} from "@react-native-picker/picker";
+import EditionComponent from "../components/EditionComponent";
 
 function FilterScreen({navigation}) {
     const initState = {
@@ -29,7 +30,6 @@ function FilterScreen({navigation}) {
             ...criteria,
             [name]:value
         })
-        console.log(criteria)
     }
     return (
         <ScrollView style={componentsStyles.container}>
@@ -44,19 +44,7 @@ function FilterScreen({navigation}) {
                     </Text>
                 </TouchableOpacity>
             </View>
-            <View style={componentsStyles.pickerContainer}>
-                <Picker
-                    style={componentsStyles.picker}
-                    selectedValue={criteria.edition}
-                    onValueChange={(value) => onSetCriteria('edition', value)}
-                >
-                    {
-                        editions.map(edition => {
-                            return <Picker.Item style={componentsStyles.pickerItem} key={edition.value} label={edition.label} value={edition.value} />
-                        })
-                    }
-                </Picker>
-            </View>
+            <EditionComponent onPick={(value) => onSetCriteria('edition', value)} />
             <Label name="Mots clés:" />
             <CustomInput value={criteria.keyword} placeholder={"Ex: Danse, Voyage, Fête"} onChange={(value) => onSetCriteria('keyword', value)}/>
             <Label name="Thème:" />

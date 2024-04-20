@@ -1,11 +1,13 @@
 import React from 'react';
 import {Text, SafeAreaView, View, StyleSheet, TouchableOpacity} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import EditionComponent from "./EditionComponent";
 
 function EventListHeader({title, action}) {
     return (
         <View style={styles.header}>
             <Text style={styles.title}>{title}</Text>
+            {/*<EditionComponent onPick={(value) => console.log("Hello, world")}/>*/}
             <TouchableOpacity onPress={action}>
                 <MaterialCommunityIcons name="plus-circle" size={30} />
             </TouchableOpacity>
