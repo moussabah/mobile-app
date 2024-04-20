@@ -4,9 +4,11 @@ import {config} from "../config/config";
 import CrudInterface from "./CrudInterface";
 import EventStorage from "./storages/EventStorage";
 import FakerService from "./FakerService";
+import {Pageable} from "../models/Pageable";
+import {P} from "@expo/html-elements";
 export default class EventService implements CrudInterface<Event>{
 
-    private eventStorage = new EventStorage();
+    private  eventStorage = new EventStorage();
 
     async create(entity: Event ): Promise<Event> {
         await HttpRequestService.postData(config.route.createEvent, entity)
@@ -35,5 +37,22 @@ export default class EventService implements CrudInterface<Event>{
                 resolve(fakers.getEvents(100));
             }, 3000)
         })
+    }
+
+    async  getAllWithPagination(page: number, limit : number): Promise<Response>{
+        let  pageable = new Pageable(page, limit, ["dateCreation"]);
+        return HttpRequestService.getData(config.route.getEventPagination, pageable);
+
+        /*const fakers = new FakerService();
+        return new Promise<Event[]>((resolve, reject) => {
+            setTimeout(() => {
+                resolve(fakers.getEvents(100));
+            }, 3000)
+        })*/
+    }
+
+    async  fetchEvents() {
+        const eventList: Response = await this.getAllWithPagination(1, 10);
+        console.log("EventList",eventList );
     }
 }

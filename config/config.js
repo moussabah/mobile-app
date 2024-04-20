@@ -5,6 +5,7 @@ export const config =  {
         createEvent: `${domain}/event/create`,
         rateEvent: `${domain}/event/rate/{id}`,
         filterBySearch: `${domain}/search/{query}`,
-        filterByCriteria: `${domain}/search/criteria`
+        filterByCriteria: `${domain}/search/criteria`,
+        getEventPagination: `${domain}/event?page={page}&limit={limit}`
     },
 }

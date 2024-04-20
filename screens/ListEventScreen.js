@@ -3,23 +3,56 @@ import {Styles} from "../assets/styles/Styles";
 import {FlatList, ScrollView, StyleSheet, TextInput, View} from "react-native";
 import EventCard from "../components/EventCard";
 import FilterService from "../services/FilterService";
+import EventService from "../services/EventService";
 import Tag from "../components/Tag";
+import Event from "../models/Event";
+import EventStorage from "../services/storages/EventStorage";
 
-function ListEventScreen({route, navigation}) {
+async function ListEventScreen({route, navigation}) {
+    //init data
+    const eventService = new EventService();
+    let eventList = [];
+
     const params = route.params;
-    if (params !== undefined && params.criteria != null){
+    if (params !== undefined && params.criteria != null) {
         FilterService.filterByCriteria(params.criteria);
     }
     const tags = ["Tout", "Informatique", "Science", "Programmation", "IA", "École", "Business"]
     const [activeTag, setActiveTag] = useState(null);
+    let page = 0, limit = 10;
+    const data = useMemo(async () => {
 
-    const data = useMemo(() => {
+        eventService.getAllWithPagination(page, limit).then((response) => {
+             eventList  = response.data.data;
+             console.log("eventList", eventList)
+        })
+
+        /*eventService.getAllWithPagination(page, limit)
+            .then((eventList: Event[]) => {
+                // Do something with the eventList
+                console.log(eventList);
+            })
+            .catch((error) => {
+                // Handle error
+                console.error('Error fetching events:', error);
+            })
+            .finally(() => {
+                // Optional: Do something after the promise is settled
+            })
+            .then((eventList: Event[]) => {
+                // Use tap to perform a side effect without changing the data
+                tap((eventList: Event[]) => {
+                    console.log('Event list fetched:', eventList);
+                });
+            });*/
+
         const tab = []
         for (let i = 0; i < 100; i++) {
             tab[i] = {id: i};
         }
         return tab
     }, [])
+
     function tagHandler(i) {
         setActiveTag(i)
     }
