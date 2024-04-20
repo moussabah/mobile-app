@@ -4,16 +4,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class CourseStorage implements StorageService<Course>{
 
-    storageKey = "Courses"
+    storageKey = "courses"
     async add(item: Course): Promise<void> {
-        let Courses: string|null = await AsyncStorage.getItem(this.storageKey);
-        if (Courses == null){
-            Courses = JSON.stringify([{
-                ...item
-            }])
+        let courses: string|null = await AsyncStorage.getItem(this.storageKey);
+        if (courses == null){
+            courses = JSON.stringify([item])
         }
         const newCourses = [
-            ...JSON.parse(Courses),
+            ...JSON.parse(courses),
             item,
         ];
         await AsyncStorage.setItem(this.storageKey, JSON.stringify(newCourses))

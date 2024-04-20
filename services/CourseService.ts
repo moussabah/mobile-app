@@ -7,7 +7,7 @@ import CourseStorage from "./storages/CourseStorage";
 
 export default class CourseService implements CrudInterface<Course>{
     async create(entity: Course ): Promise<Course> {
-        await HttpRequestService.postData(config.route.createCourse, entity);
+        // await HttpRequestService.postData(config.route.createCourse, entity);
         const courseStorage = new CourseStorage();
         entity.id = 1;
         await courseStorage.add(entity);

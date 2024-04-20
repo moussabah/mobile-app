@@ -14,7 +14,7 @@ import {useFocusEffect} from "@react-navigation/native";
 import {Picker} from "@react-native-picker/picker";
 import styles from "./CSS/styles";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import {assertSourceType} from "@babel/core/lib/config/validation/option-assertions";
+import {assertSourceType, msg} from "@babel/core/lib/config/validation/option-assertions";
 import {Tag} from "../models/Tag";
 import tag from "../components/Tag";
 
@@ -30,6 +30,8 @@ function CreateCourseScreen({navigation}) {
     const [eventSelected, setEventSelected] = useState(null);
     const [availableEvents, setAvailableEvents] = useState([]);
     const [courses, setCourses] = useState(initialData);
+    const courseService = new CourseService();
+    const courseValidator = new CourseValidator();
 
     useFocusEffect(useCallback(() => {
         initData()
@@ -67,8 +69,14 @@ function CreateCourseScreen({navigation}) {
         });
     }
 
-    const onSubmit = () => {
-
+    const onSubmit = async () => {
+        const error = courseValidator.validate(courses);
+        if (error != null){
+            alert(error)
+            return
+        }
+        await courseService.create(courses);
+        navigation.navigate('CourseList');
     }
 
 
