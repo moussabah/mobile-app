@@ -35,8 +35,8 @@ export default class CourseStorage implements StorageService<Course>{
             return [];
         }
         const CoursesObjects: any[] = JSON.parse(Courses);
-        return CoursesObjects.map((Course): Course => {
-            return (new Course()).format(Course);
+        return CoursesObjects.map( c => {
+            return (new Course()).format(c);
         });
     }
 

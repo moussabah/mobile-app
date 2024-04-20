@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Styles} from "../assets/styles/Styles";
 import {Button, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import FilterService from "../services/FilterService";
@@ -7,35 +7,27 @@ import CourseCard from "../components/CourseCard";
 import CourseStorage from "../services/storages/CourseStorage";
 import styles from "./CSS/styles";
 import componentStyles from "./CSS/styles";
+import {useFocusEffect} from "@react-navigation/native";
+import CourseService from "../services/CourseService";
 
 function ListCourseScreen({route, navigation}) {
     const [courses, setCourses] = useState([]);
+    const courseService = new CourseService();
 
+    useFocusEffect(useCallback(() => {
+        initData()
+        return () => {}
+    }, []));
 
     const onNavigate = () => {
         navigation.navigate('CreateCourseScreen')
     }
 
-
-
-    const data = useMemo(() => {
-        const tab = []
-        for (let i = 0; i < 3; i++) {
-            tab[i] = {id: i};
-        }
-        return tab
-    }, [])
-
-    function tagHandler(i) {
-        setActiveTag(i)
-    }
-
-    const tagsItems = () => {
-        const tagsItems = [];
-        for (let i = 0; i < tags.length; i++) {
-            tagsItems.push(<Tag name={tags[i]} key={i} active={activeTag === i} onPress={() => tagHandler(i)}/>)
-        }
-        return tagsItems;
+    const initData = () => {
+        courseService.getAll().then(courses => {
+            setCourses(courses)
+            console.log({courses})
+        })
     }
 
     const onSubmit = () => {
@@ -49,8 +41,8 @@ function ListCourseScreen({route, navigation}) {
             <TextInput style={{...Styles.input, ...eventStyles.input, marginTop: 5,}} placeholder={"Recherche"}/>
             <FlatList data={courses}
               keyExtractor={(item, index) => item + index}
-              renderItem={({item}) => (
-                  <CourseCard course={item} navigation={navigation}/>
+              renderItem={item => (
+                  <CourseCard course={item.item} navigation={navigation}/>
               )}
             />
         </View>

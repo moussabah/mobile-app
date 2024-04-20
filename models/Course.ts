@@ -13,6 +13,7 @@ export default class Course {
         this.id = courseData.id ?? null;
         this.title = courseData.title ?? null;
         this.isPublished = courseData.isPublished ?? null;
+        this.description = courseData.description ?? null;
 
         if (Array.isArray(courseData.events)){
             this.events = courseData.events.map((event: any): Event => {

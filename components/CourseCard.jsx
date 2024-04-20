@@ -2,25 +2,20 @@ import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from "react-native";
 
 function CourseCard({course,navigation}) {
-
-    const data = {};
     const onPressHandler = () => {
         navigation.navigate('CourseDetail', {
-            courses: data
+            course,
         })
     }
 
     return (
         <TouchableOpacity style={styles.container} onPress={onPressHandler}>
             <View>
-                <Image source={{uri: data.image}} style={styles.image}/>
-            </View>
-            <View>
                 <View>
-                    <Text style={styles.title}>{data.titre_fr}</Text>
+                    <Text style={styles.title}>{course.title}</Text>
                 </View>
-                <View>
-                    <Text>{data.description_longue_fr}</Text>
+                <View style={styles.description}>
+                    <Text>{course.description}</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -35,6 +30,7 @@ const styles = StyleSheet.create({
         elevation: 3,
         marginVertical: 4,
         flex: 1,
+        borderRadius: 2,
     },
     image: {
         height: 200,
@@ -43,6 +39,9 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: "bold"
+    },
+    description:{
+        marginVertical: 8,
     }
 })
 export default CourseCard;

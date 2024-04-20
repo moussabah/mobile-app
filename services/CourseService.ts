@@ -6,11 +6,11 @@ import CrudInterface from "./CrudInterface";
 import CourseStorage from "./storages/CourseStorage";
 
 export default class CourseService implements CrudInterface<Course>{
+    courseStorage = new CourseStorage();
     async create(entity: Course ): Promise<Course> {
         // await HttpRequestService.postData(config.route.createCourse, entity);
-        const courseStorage = new CourseStorage();
         entity.id = 1;
-        await courseStorage.add(entity);
+        await this.courseStorage.add(entity);
         return entity;
     }
     async delete(id: number|string): Promise<boolean> {
@@ -24,5 +24,10 @@ export default class CourseService implements CrudInterface<Course>{
 
     update(entity: Course): Promise<boolean> {
         return Promise.resolve(false);
+    }
+
+
+    getAll(): Promise<Course[]>{
+        return this.courseStorage.getAll();
     }
 }
