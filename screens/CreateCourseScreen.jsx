@@ -45,7 +45,6 @@ function CreateCourseScreen({navigation}) {
     const onSelectEvent = (value) => {
         setEventSelected(value);
         const index = eventsSelected.findIndex(e => e.name === value.name);
-        console.log(index)
         if (index == -1){
             setEventsSelected([
                 ...eventsSelected,
