@@ -27,22 +27,14 @@ function CreateCourseScreen({navigation}) {
         tags: [],
     }
     const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
     const [eventSelected, setEventSelected] = useState(null);
-    const [eventsSelected, setEventsSelected] = useState([]);
     const [availableEvents, setAvailableEvents] = useState([]);
-    const [editions, setEditions] = useState([])
     const [courses, setCourses] = useState(initialData);
 
     useFocusEffect(useCallback(() => {
         initData()
         return () => {}
     }, []));
-
-
-    const onCourseChange = (name, value) => {
-
-    }
 
     const onSelectEvent = (value) => {
         setEventSelected(value);
@@ -75,13 +67,8 @@ function CreateCourseScreen({navigation}) {
         });
     }
 
-    const isPublished = {
-        isPublished: false,
-    }
-    const [tags, setTags] = useState("");
-
     const onSubmit = () => {
-        console.log(courses)
+
     }
 
 
