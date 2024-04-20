@@ -1,39 +1,49 @@
 import React from 'react';
-import {Text, View, StyleSheet} from "react-native";
+import {Text, View, StyleSheet, FlatList, ScrollView} from "react-native";
 import HtmlView from "react-native-htmlview";
+import EventCard from "../components/EventCard";
 
 function CourseDetail({route, navigation}) {
     const {course} = route.params;
-    console.log(course)
     return (
-        <View style={styles.body}>
+        <ScrollView style={styles.body}>
             <View>
-                <Text style={styles.title}>{course.identifiant}</Text>
-                <Text style={styles.date}>{course.resume_horaires_fr}</Text>
+                <Text style={styles.title}>{course.title}</Text>
             </View>
             <View style={styles.description}>
-                <HtmlView value={course.description_longue_html_fr} />
+                <Text style={styles.descriptionText}>{course.description}</Text>
             </View>
-        </View>
+            <View style={styles.eventContainer}>
+                <Text style={{fontSize: 20,fontWeight: "bold", marginVertical: 10,}}>Évenements:</Text>
+                {course.events.map(event => {
+                   return <EventCard event={event} navigation={navigation}/>
+                })}
+            </View>
+        </ScrollView>
     );
 }
 
 
 const styles = StyleSheet.create({
     body: {
-        paddingHorizontal: 8,
-        paddingTop: 5,
+        paddingHorizontal: 5,
+        paddingTop: 2,
     },
     title: {
-        fontSize: 20,
+        fontSize: 30,
         fontWeight: "bold",
-        marginTop: 15,
     },
     description:{
-        marginTop: 15,
+      marginVertical: 10,
+    },
+    descriptionText:{
+        fontSize: 20,
     },
     date:{
         fontSize: 12,
+    },
+    eventContainer:{
+        backgroundColor:"#FFF",
     }
 })
 
