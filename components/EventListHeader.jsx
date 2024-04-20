@@ -7,30 +7,46 @@ function EventListHeader({title, action}) {
     return (
         <View style={styles.header}>
             <Text style={styles.title}>{title}</Text>
-            {/*<EditionComponent onPick={(value) => console.log("Hello, world")}/>*/}
-            <TouchableOpacity onPress={action}>
-                <MaterialCommunityIcons name="plus-circle" size={30} />
-            </TouchableOpacity>
+            <View style={styles.action}>
+                <EditionComponent style={styles.picker} onPick={(value) => console.log("Hello, world")}/>
+                <TouchableOpacity onPress={action}>
+                    <MaterialCommunityIcons name="plus-circle" size={30}/>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
 
 
 const styles = StyleSheet.create({
-    header:{
+    header: {
         flexDirection: "row",
-        height: 50,
+        height: 60,
         marginTop: 20,
         marginBottom: 10,
         paddingLeft: 10,
-        paddingRight: 15,
         alignItems: "center",
         justifyContent: "space-between",
         backgroundColor: "#FFF",
     },
-    title:{
+    title: {
         fontWeight: "bold",
         fontSize: 20,
+        flex: 1
+    },
+    picker: {
+        flex:3,
+        height: 40,
+        justifyContent:'center',
+        marginRight: 10,
+    },
+    action:{
+        flex:4,
+        flexDirection:'row',
+        width:"100%",
+        justifyContent:'center',
+        alignItems:'center',
+        paddingRight: 2
     }
 })
 

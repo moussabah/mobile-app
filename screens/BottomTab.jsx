@@ -20,7 +20,7 @@ export default function BottomTab({navigation}) {
         >
             <Tab.Screen name="EventScreen" component={ListEventScreen} options={
                 {
-                    title: 'Events',
+                    title: 'Edition',
                     tabBarLabel: "Evenements",
                     tabBarIcon: ({color, size}) => (
                         <MaterialCommunityIcons name="calendar" color={color} size={size}/>

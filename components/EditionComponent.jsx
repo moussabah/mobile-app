@@ -42,7 +42,14 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFF",
         borderRadius: 8,
         paddingHorizontal: 5,
-        borderColor: "#a8a8a8"
+        borderColor: "#a8a8a8",
+        justifyContent:'center'
+    },
+    piker:{
+        borderWidth:1,
+    },
+    pickerItem:{
+        fontSize: 18,
     },
 })
 export default EditionComponent;
