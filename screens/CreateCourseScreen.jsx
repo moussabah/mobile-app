@@ -19,10 +19,10 @@ import {assertSourceType} from "@babel/core/lib/config/validation/option-asserti
 function CreateCourseScreen({navigation}) {
     const initialData = {
         title: null,
-        events: null,
+        events: [],
         description: null,
         isPublished: false,
-        tags: null,
+        tags: [],
     }
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -44,12 +44,15 @@ function CreateCourseScreen({navigation}) {
 
     const onSelectEvent = (value) => {
         setEventSelected(value);
-        const index = eventsSelected.findIndex(e => e.name === value.name);
+        const index = courses.events.findIndex(e => e.name === value.name);
         if (index == -1){
-            setEventsSelected([
-                ...eventsSelected,
-                value
-            ])
+            setCourses({
+                ...courses,
+                events: [
+                    ...courses.events,
+                    value,
+                ]
+            })
         }
     }
 
@@ -116,11 +119,14 @@ function CreateCourseScreen({navigation}) {
         const selected = [];
 
         const onPress = (event) => {
-            const newSelected = eventsSelected.filter(i => i.name !== event.name);
-            setEventsSelected(newSelected);
+            const newSelected = courses.events.filter(i => i.name !== event.name);
+            setCourses({
+                ...courses,
+                events: newSelected,
+            })
         }
 
-        eventsSelected.forEach(function(item, index){
+        courses.events.forEach(function(item, index){
             selected.push(
                 <View key={index} style={screenStyles.eventSelected}>
                     <Text style={screenStyles.eventSelectedText}>{item.name}</Text>
@@ -147,7 +153,7 @@ function CreateCourseScreen({navigation}) {
                     }
                 </Picker>
             </View>
-            {eventsSelected.length == 0 || (
+            {courses.events.length == 0 || (
                 <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={screenStyles.tagContainer}>
                     {eventSelectedComponent()}
                 </ScrollView>
