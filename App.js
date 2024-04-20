@@ -14,6 +14,7 @@ import CreateEventScreen from "./screens/CreateEventScreen";
 import MapViewScreen from "./screens/MapViewScreen";
 import CreateCourseScreen from "./screens/CreateCourseScreen";
 import ListCourseScreen from "./screens/ListCourseScreen";
+import CourseDetail from "./screens/CourseDetail";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,7 @@ export default function App() {
                 <Stack.Screen name="EventDetail" component={EventDetail} options={{title: 'Description'}} />
                 <Stack.Screen name="CreateCourseScreen" component={CreateCourseScreen} options={{title: 'Créer un parcours'}} />
                 <Stack.Screen name="CourseList" component={ListCourseScreen} options={{title: 'Parcours disponibles'}} />
+                <Stack.Screen name="CourseDetail" component={CourseDetail} options={{title: 'Detail du parcours'}} />
             </Stack.Navigator>
         </NavigationContainer>
     );

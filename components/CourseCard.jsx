@@ -4,9 +4,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 function CourseCard({course,navigation}) {
     const onPressHandler = () => {
-        navigation.navigate('CourseDetail', {
-            course,
-        })
+        navigation.navigate('CourseDetail', {course})
     }
 
     return (
