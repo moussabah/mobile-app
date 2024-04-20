@@ -1,30 +1,20 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {Styles} from "../assets/styles/Styles";
-import {Button, FlatList, ScrollView, StyleSheet, TextInput, View} from "react-native";
+import {Button, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import FilterService from "../services/FilterService";
 import Tag from "../components/Tag";
 import CourseCard from "../components/CourseCard";
 import CourseStorage from "../services/storages/CourseStorage";
+import styles from "./CSS/styles";
+import componentStyles from "./CSS/styles";
 
 function ListCourseScreen({route, navigation}) {
-    const params = route.params;
-    if (params !== undefined){
-        FilterService.filterByCriteria([], params);
+    const [courses, setCourses] = useState([]);
+
+
+    const onNavigate = () => {
+        navigation.navigate('CreateCourseScreen')
     }
-    const tags = ["Tout", "Parcours1", "Parcours2"];
-    const [activeTag, setActiveTag] = useState(null);
-
-
-
-    const [availableCourses, setAvailableCourses] = useState([]);
-    useEffect(() => {
-        const courseStorage = new CourseStorage();
-        courseStorage.getAll().then(courses => {
-            setAvailableCourses(courses);
-        }).catch(error => {
-            console.error("Erreur lors de la récupération des parcours :", error);
-        });
-    }, []);
 
 
 
@@ -53,12 +43,11 @@ function ListCourseScreen({route, navigation}) {
     }
     return (
         <View style={Styles.container}>
-            <TextInput style={{...Styles.input, ...eventStyles.input}} placeholder={"Recherche"}/>
-            <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={eventStyles.tagContainer}>
-                {tagsItems()}
-            </ScrollView>
-            <Button title={'CreateCourseScreen'} onPress={onSubmit}/>
-            <FlatList data={availableCourses}
+            <TouchableOpacity style={eventStyles.floatBtn} onPress={onNavigate}>
+                <Text style={eventStyles.floatBtnText}>+</Text>
+            </TouchableOpacity>
+            <TextInput style={{...Styles.input, ...eventStyles.input, marginTop: 5,}} placeholder={"Recherche"}/>
+            <FlatList data={courses}
               keyExtractor={(item, index) => item + index}
               renderItem={({item}) => (
                   <CourseCard course={item} navigation={navigation}/>
@@ -73,6 +62,22 @@ const eventStyles = StyleSheet.create({
         marginTop: 5,
         paddingTop:1,
         height: 54,
+    },
+    floatBtn:{
+        position:"absolute",
+        bottom: 20,
+        right: 20,
+        justifyContent:"center",
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        borderRadius: 20,
+        backgroundColor:"#FFF",
+        elevation: 10,
+        zIndex: 10,
+    },
+    floatBtnText: {
+        fontSize: 25,
+        fontWeight:"bold",
     }
 })
 
