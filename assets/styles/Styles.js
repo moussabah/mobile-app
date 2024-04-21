@@ -25,5 +25,16 @@ export const Styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         alignContent:"space-around",
-    }
+    },
+    pickerContainer:{
+        borderWidth: 1,
+        marginTop: 8,
+        backgroundColor: "#FFF",
+        borderRadius: 8,
+        paddingHorizontal: 5,
+        borderColor: "#a8a8a8"
+    },
+    pickerItem:{
+        fontSize: 18,
+    },
 })

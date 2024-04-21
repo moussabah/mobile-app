@@ -1,34 +1,61 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, SafeAreaView, View, StyleSheet, TouchableOpacity} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import EditionComponent from "./EditionComponent";
 
-function EventListHeader({title, action}) {
+function EventListHeader({title, navigation}) {
+
+    const onPick = (value) => {
+        navigation.navigate('')
+    }
+
+    const onPressAdd = () => {
+        navigation.navigate("CreateEventScreen")
+    }
+
     return (
         <View style={styles.header}>
             <Text style={styles.title}>{title}</Text>
-            <TouchableOpacity onPress={action}>
-                <MaterialCommunityIcons name="plus-circle" size={30} />
-            </TouchableOpacity>
+            <View style={styles.action}>
+                <EditionComponent style={styles.picker} onPick={(value) => onPick(value)}/>
+                <TouchableOpacity onPress={onPressAdd}>
+                    <MaterialCommunityIcons name="plus-circle" size={30}/>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
 
 
 const styles = StyleSheet.create({
-    header:{
+    header: {
         flexDirection: "row",
-        height: 50,
+        height: 60,
         marginTop: 20,
         marginBottom: 10,
         paddingLeft: 10,
-        paddingRight: 15,
         alignItems: "center",
         justifyContent: "space-between",
         backgroundColor: "#FFF",
     },
-    title:{
+    title: {
         fontWeight: "bold",
         fontSize: 20,
+        flex: 1
+    },
+    picker: {
+        flex:3,
+        height: 40,
+        justifyContent:'center',
+        marginRight: 10,
+    },
+    action:{
+        flex:4,
+        flexDirection:'row',
+        width:"100%",
+        justifyContent:'center',
+        alignItems:'center',
+        paddingRight: 2
     }
 })
 

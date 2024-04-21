@@ -16,7 +16,7 @@ function MenuScreen({route, navigation}) {
                     <MaterialCommunityIcons name="calendar" size={65}/>
                     <Text>Évenements</Text>
                 </InteractiveCard>
-                <InteractiveCard onPress={() => navigation.navigate("ParcourScreen")}>
+                <InteractiveCard onPress={() => navigation.navigate("CourseList")}>
                     <MaterialCommunityIcons name="timeline" size={65}/>
                     <Text>Parcours</Text>
                 </InteractiveCard>

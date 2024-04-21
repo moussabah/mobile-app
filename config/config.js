@@ -1,4 +1,4 @@
-const domain = "http://10.0.2.2:8080"
+const domain = "https://localhost"
 
 export const config =  {
     route: {
@@ -9,6 +9,7 @@ export const config =  {
         filterByCriteria: `${domain}/search/criteria`,
         getEventPagination: `${domain}/events/pagination?page={page}&size={size}&sort={sort}`,
         getParcourPagination: `${domain}/parcours/pagination?page={page}&size={size}&sort={sort}`,
+        createCourse: `${domain}/course/create`
 
     },
 }
