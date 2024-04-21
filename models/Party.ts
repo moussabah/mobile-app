@@ -1,19 +1,21 @@
 
 export default class Party {
-    id?: string|number;
-    tagName?: string;
-    public dateCreation?: string;
-    public dateInit?: string;
-    public dateEnd?: string;
-
+    label?: string;
+    value?: number;
 
     format(data: any): Party {
-        this.id = data.id ?? null;
-        this.tagName = data.tagName ?? null;
-        this.dateCreation = data.dateCreation ?? null;
-        this.dateInit = data.dateInit ?? null;
-        this.dateEnd = data.dateEnd ?? null;
+        this.label = data.tagName ?? null;
+        this.value = data.id ?? null;
         return this;
+    }
+    
+    
+    toArray(data: any[]): Party[] {
+        const partys = [];
+        for (let i = 0; i < data.length; i++) {
+            partys.push(this.format(data[i]));
+        }
+        return partys;
     }
 }
 

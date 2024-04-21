@@ -3,6 +3,7 @@ import {Picker} from "@react-native-picker/picker";
 import {View, StyleSheet} from "react-native";
 import FakerService from "../services/FakerService";
 import PartyService from "../services/PartyService";
+import Party from "../models/Party";
 
 function EditionComponent(props) {
     const {onPick, style} = props;
@@ -10,18 +11,14 @@ function EditionComponent(props) {
     const [value, setValue] = useState(null);
     const [partys, setPartys] = useState(null);
     const partyService = new PartyService();
-    
-    const editions = useMemo(() => {
-        return fakerService.getEditions();
-    }, [])
+    const [editions, setEditions] = useState([]);
 
     useEffect(() => {
         partyService.getAll()
             .then(response => response.json())
             .then(res => {
-                Part
-                console.log("set party list", res)
-                setEventListHeaders(res);
+                console.log({res})
+                setEditions((new Party()).toArray(res))
             })
             .catch((error) => {
                 console.error('Error fetching partys:', error);
@@ -42,7 +39,7 @@ function EditionComponent(props) {
             >
                 {
                     editions.map(edition => {
-                        return <Picker.Item style={styles.pickerItem} key={edition.value} label={edition.label} value={edition} />
+                        return <Picker.Item style={styles.pickerItem} key={edition.id} label={edition.label} value={edition} />
                     })
                 }
             </Picker>
