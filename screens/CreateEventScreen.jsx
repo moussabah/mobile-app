@@ -103,9 +103,11 @@ function CreateEventScreen({route, navigation}) {
             return;
         }
         event.id = eventFromUser.id;
-        eventService.update(event).then(res => {
-            navigation.navigate("UserEvent");
-        });
+        eventService
+            .update(event)
+            .then(res => {
+                navigation.navigate("UserEvent");
+            });
     }
 
     const onLoadImage = async () => {
@@ -118,7 +120,7 @@ function CreateEventScreen({route, navigation}) {
         if (!result.canceled) {
             setImage(result.assets[0].uri)
         }
-    };
+    }
 
     const toggleSwitch = (value) => {
         setIsPublished(value);

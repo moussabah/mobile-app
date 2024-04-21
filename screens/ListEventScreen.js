@@ -1,15 +1,12 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Styles} from "../assets/styles/Styles";
 import {FlatList, ScrollView, StyleSheet, TextInput, View} from "react-native";
 import EventCard from "../components/EventCard";
 import FilterService from "../services/FilterService";
 import EventService from "../services/EventService";
 import Tag from "../components/Tag";
-import Event from "../models/Event";
-import EventStorage from "../services/storages/EventStorage";
 
-async function ListEventScreen({route, navigation}) {
-    //init data
+function ListEventScreen({route, navigation}) {
     const eventService = new EventService();
     let eventList = [];
 
@@ -19,39 +16,20 @@ async function ListEventScreen({route, navigation}) {
     }
     const tags = ["Tout", "Informatique", "Science", "Programmation", "IA", "École", "Business"]
     const [activeTag, setActiveTag] = useState(null);
+    const [events, setEvents] = useState([]);
     let page = 0, limit = 10;
-    const data = useMemo(async () => {
 
-        eventService.getAllWithPagination(page, limit).then((response) => {
-             eventList  = response.data.data;
-             console.log("eventList", eventList)
-        })
 
-        /*eventService.getAllWithPagination(page, limit)
-            .then((eventList: Event[]) => {
-                // Do something with the eventList
-                console.log(eventList);
+    useEffect(() => {
+        eventService.getAllWithPagination(page, limit)
+            .then(response => response.json())
+            .then(res => {
+                setEvents(res.content);
             })
             .catch((error) => {
-                // Handle error
                 console.error('Error fetching events:', error);
             })
-            .finally(() => {
-                // Optional: Do something after the promise is settled
-            })
-            .then((eventList: Event[]) => {
-                // Use tap to perform a side effect without changing the data
-                tap((eventList: Event[]) => {
-                    console.log('Event list fetched:', eventList);
-                });
-            });*/
-
-        const tab = []
-        for (let i = 0; i < 100; i++) {
-            tab[i] = {id: i};
-        }
-        return tab
-    }, [])
+    }, []);
 
     function tagHandler(i) {
         setActiveTag(i)
@@ -72,7 +50,7 @@ async function ListEventScreen({route, navigation}) {
             <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={eventStyles.tagContainer}>
                 {tagsItems()}
             </ScrollView>
-            <FlatList data={data}
+            <FlatList data={events}
                       keyExtractor={(item, index) => item + index}
                       renderItem={({item}) => (
                           <EventCard event={item} navigation={navigation}/>
@@ -85,7 +63,7 @@ async function ListEventScreen({route, navigation}) {
 const eventStyles = StyleSheet.create({
     tagContainer: {
         marginTop: 5,
-        paddingTop:1,
+        paddingTop: 1,
         height: 54,
     }
 })

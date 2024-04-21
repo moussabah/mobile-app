@@ -1,5 +1,6 @@
 import {Tag} from "./Tag";
 import Geolocation from "./Geolocation";
+import {config} from "../config/config";
 
 export default class Event {
     public id?: string|number;
@@ -28,9 +29,9 @@ export default class Event {
         this.rate = eventData.rate ?? 0;
         this.email = eventData.email ?? null;
         this.dateEnd = eventData.dateEnd ?? null;
-        this.dateBegin = eventData.dateBegin ?? null;
+        this.dateBegin = eventData.dateCreation ?? null;
         this.isFree = eventData.isFree ?? null;
-        this.price = eventData.price ?? null;
+        this.price = eventData.amount ?? null;
         this.description = eventData.description ?? null;
         this.postalCode = eventData.postalCode ?? null;
         this.address = eventData.address ?? null;
@@ -48,6 +49,10 @@ export default class Event {
 
     setGeolocation(lon: number, lat:number ){
         this.geolocation = new Geolocation(lon, lat);
+    }
+
+    getImage(){
+        return config.route.domain+this.imageUrl;
     }
 
 }

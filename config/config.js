@@ -1,11 +1,12 @@
-const domain = "https://localhost"
+const domain = "http://10.0.2.2:8080"
 
 export const config =  {
     route: {
-        createEvent: `${domain}/event/create`,
+        domain: `${domain}/`,
+        createEvent: `${domain}/events`,
         rateEvent: `${domain}/event/rate/{id}`,
         filterBySearch: `${domain}/search/{query}`,
         filterByCriteria: `${domain}/search/criteria`,
-        getEventPagination: `${domain}/event?page={page}&limit={limit}`
+        getEventPagination: `${domain}/events/pagination?page={page}&size={size}&sort={sort}`
     },
 }

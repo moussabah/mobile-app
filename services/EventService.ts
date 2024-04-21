@@ -41,14 +41,12 @@ export default class EventService implements CrudInterface<Event>{
 
     async  getAllWithPagination(page: number, limit : number): Promise<Response>{
         let  pageable = new Pageable(page, limit, ["dateCreation"]);
-        return HttpRequestService.getData(config.route.getEventPagination, pageable);
-
-        /*const fakers = new FakerService();
-        return new Promise<Event[]>((resolve, reject) => {
-            setTimeout(() => {
-                resolve(fakers.getEvents(100));
-            }, 3000)
-        })*/
+        const url = config.route.getEventPagination
+            .replace(`{page}`,`${page}`)
+            .replace(`{size}`,`${limit}`)
+            .replace(`{sort}`,'ASC');
+        console.log({url})
+        return HttpRequestService.getData(url);
     }
 
     async  fetchEvents() {
