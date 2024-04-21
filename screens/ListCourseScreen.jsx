@@ -14,10 +14,24 @@ function ListCourseScreen({route, navigation}) {
     const [courses, setCourses] = useState([]);
     const courseService = new CourseService();
 
-    useFocusEffect(useCallback(() => {
-        initData()
+    let page = 0, limit = 10;
+
+    useEffect(() => {
+        courseService.getAllWithPagination(page, limit)
+            .then(response => response.json())
+            .then(res => {
+                setCourses(res.content);
+            })
+            .catch((error) => {
+                console.error('Error fetching parcours:', error);
+            })
+    }, []);
+
+    /*useFocusEffect(useCallback(() => {
+       initData()
         return () => {}
     }, []));
+    */
 
     const onNavigate = () => {
         navigation.navigate('CreateCourseScreen')

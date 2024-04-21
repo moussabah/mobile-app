@@ -7,6 +7,9 @@ import EventService from "../services/EventService";
 import Tag from "../components/Tag";
 
 function ListEventScreen({route, navigation}) {
+
+    const MAX_TAG = 10;
+
     const eventService = new EventService();
     let eventList = [];
 
@@ -17,6 +20,7 @@ function ListEventScreen({route, navigation}) {
     const tags = ["Tout", "Informatique", "Science", "Programmation", "IA", "École", "Business"]
     const [activeTag, setActiveTag] = useState(null);
     const [events, setEvents] = useState([]);
+    const [eventsFiltered, setEventsFiltered] = useState([]);
     let page = 0, limit = 10;
 
 
@@ -25,21 +29,41 @@ function ListEventScreen({route, navigation}) {
             .then(response => response.json())
             .then(res => {
                 setEvents(res.content);
-                console.log(res.content)
+                setEventsFiltered(res.content);
             })
             .catch((error) => {
                 console.error('Error fetching events:', error);
             })
     }, []);
 
-    function tagHandler(i) {
+    function tagHandler(i, name) {
         setActiveTag(i)
+        if (name ==  "Tout"){
+            setEventsFiltered(events);
+            return
+        }
+        let filtered = eventsFiltered.filter(e => {
+            return e.tags.findIndex(t => t.tagName === name) != -1;
+        })
+        setEventsFiltered(filtered)
     }
 
     const tagsItems = () => {
+        let done = false;
         const tagsItems = [];
-        for (let i = 0; i < tags.length; i++) {
-            tagsItems.push(<Tag name={tags[i]} key={i} active={activeTag === i} onPress={() => tagHandler(i)}/>)
+        tagsItems.push(
+            <Tag name={"Tout"} key={-1} active={activeTag === -1} onPress={() => tagHandler(-1, "Tout")}/>
+        )
+        for (let i = 0; i < events.length; i++) {
+            const tags = events[i].tags;
+            for (let j = 0; j < tags.length; j++) {
+                if (tagsItems.length === MAX_TAG){
+                    break;
+                }
+                tagsItems.push(
+                    <Tag name={tags[j].tagName} key={j} active={activeTag === j} onPress={() => tagHandler(j, tags[j].tagName)}/>
+                )
+            }
         }
         return tagsItems;
     };
@@ -51,7 +75,7 @@ function ListEventScreen({route, navigation}) {
             <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={eventStyles.tagContainer}>
                 {tagsItems()}
             </ScrollView>
-            <FlatList data={events}
+            <FlatList data={eventsFiltered}
                       keyExtractor={(item, index) => item + index}
                       renderItem={({item}) => (
                           <EventCard event={item} navigation={navigation}/>

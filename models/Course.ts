@@ -21,11 +21,11 @@ export default class Course {
             })
         }
 
-        if (Array.isArray(courseData.tags)){
+       /* if (Array.isArray(courseData.tags)){
             this.tags = courseData.tags.map((tag: any): Tag => {
                 return new Tag(tag.name);
             })
-        }
+        }*/
         return this;
     }
 }
