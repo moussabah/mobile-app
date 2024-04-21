@@ -8,12 +8,18 @@ export default class Party {
         this.value = data.id ?? null;
         return this;
     }
+
+    toParty(party: any){
+        this.label = party.label ?? null;
+        this.value = party.value ?? null;
+        return this;
+    }
     
     
     toArray(data: any[]): Party[] {
         const partys = [];
         for (let i = 0; i < data.length; i++) {
-            partys.push(this.format(data[i]));
+            partys.push((new Party()).format(data[i]));
         }
         return partys;
     }

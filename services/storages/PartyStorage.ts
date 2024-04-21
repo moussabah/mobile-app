@@ -1,34 +1,35 @@
 import StorageService from "./StorageService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Party from "../../models/Party";
+import {ne} from "@faker-js/faker";
 
 export default class PartyStorage implements StorageService<Party>{
 
     storageKey = "partys"
     async add(item: Party): Promise<void> {
-        let partys: string|null = await AsyncStorage.getItem(this.storageKey);
-        if (partys == null){
-            partys = JSON.stringify([{
-                ...item
-            }])
-        }
-        const newPartys = [
-            ...JSON.parse(partys),
-            item,
-        ];
-        await AsyncStorage.setItem(this.storageKey, JSON.stringify(newPartys))
-
+        await AsyncStorage.setItem(this.storageKey, JSON.stringify(item))
         return Promise.resolve();
     }
 
     async delete(id: number | string): Promise<void> {
-        const partys = await this.getAll();
-        const newPartys = partys.filter((event) => event.id !== id)
-        await AsyncStorage.setItem(this.storageKey, JSON.stringify(newPartys))
+        //TODO
     }
 
-    get(id: number | string): Promise<Party> {
-        return Promise.resolve(new Party());
+    get(id: number | string = ""): Promise<Party> {
+        if (id != ""){
+            console.log('default', this.storageKey);
+        }
+        return new Promise((resolve, reject) => {
+            AsyncStorage.getItem(this.storageKey).then((partyStr) => {
+                if (partyStr == null){
+                    reject("Party doesn't exists")
+                }else{
+                    const party = (new Party()).toParty(JSON.parse(partyStr))
+                    resolve(party);
+                }
+            })
+
+        });
     }
 
     async getAll(): Promise<Party[]> {
@@ -43,24 +44,10 @@ export default class PartyStorage implements StorageService<Party>{
     }
 
     async update(item: Party): Promise<Party> {
-        const partys = await this.getAll();
-        const index = partys.findIndex(event => event.id == item.id);
-        partys[index] = item;
-        await AsyncStorage.setItem(this.storageKey, JSON.stringify(partys));
-        return Promise.resolve(item);
-    }
-
-
-    async getLastId(): Promise<string|number> {
-        const partys = await this.getAll();
-        if (partys.length == 0){
-            return 1;
-        }
-        const lastId = partys[partys.length-1]!.id!;
-        if (typeof lastId == "string"){
-            return lastId+"1";
-        }
-        return lastId+1;
+        return  new Promise((resolve, reject) => {
+            resolve(new Party());
+            reject(new Party());
+        });
     }
 
 }

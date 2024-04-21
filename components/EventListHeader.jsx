@@ -2,15 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {Text, SafeAreaView, View, StyleSheet, TouchableOpacity} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import EditionComponent from "./EditionComponent";
-import PartyService from "../services/PartyService";
-import EventService from "../services/EventService";
+import PartyStorage from "../services/storages/PartyStorage";
 
 function EventListHeader({title, navigation}) {
 
-
     const [partys, setEventListHeaders] = useState([]);
     const onPick = (value) => {
-        navigation.navigate('')
+
     }
 
 
@@ -22,7 +20,7 @@ function EventListHeader({title, navigation}) {
         <View style={styles.header}>
             <Text style={styles.title}>{title}</Text>
             <View style={styles.action}>
-                <EditionComponent style={styles.picker} onPick={(value) => onPick(value)}/>
+                <EditionComponent navigation={navigation} style={styles.picker} onPick={(value) => onPick(value)}/>
                 <TouchableOpacity onPress={onPressAdd}>
                     <MaterialCommunityIcons name="plus-circle" size={30}/>
                 </TouchableOpacity>

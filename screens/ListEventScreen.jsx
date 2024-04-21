@@ -1,19 +1,18 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Styles} from "../assets/styles/Styles";
 import {FlatList, ScrollView, StyleSheet, TextInput, View} from "react-native";
 import EventCard from "../components/EventCard";
 import FilterService from "../services/FilterService";
 import EventService from "../services/EventService";
 import Tag from "../components/Tag";
+import PartyStorage from "../services/storages/PartyStorage";
+import {useFocusEffect} from "@react-navigation/native";
 
 function ListEventScreen({route, navigation}) {
-
     const MAX_TAG = 10;
-
     const eventService = new EventService();
-    let eventList = [];
-
     const params = route.params;
+
     if (params !== undefined && params.criteria != null) {
         FilterService.filterByCriteria(params.criteria);
     }
@@ -21,20 +20,33 @@ function ListEventScreen({route, navigation}) {
     const [activeTag, setActiveTag] = useState(null);
     const [events, setEvents] = useState([]);
     const [eventsFiltered, setEventsFiltered] = useState([]);
+
+    const [selectEdition, setSelectEdition] = useState(null);
+    const partyStorage = new PartyStorage();
+
+    const getEdition = useCallback(() => {
+
+    }, [selectEdition])
     let page = 0, limit = 10;
 
 
-    useEffect(() => {
+    useFocusEffect(useCallback(() => {
+
+        partyStorage.get().then(res => {
+            setSelectEdition(res)
+        })
+
         eventService.getAllWithPagination(page, limit)
             .then(response => response.json())
             .then(res => {
                 setEvents(res.content);
                 setEventsFiltered(res.content);
+                console.log({"LLL": res.content[0]})
             })
             .catch((error) => {
                 console.error('Error fetching events:', error);
             })
-    }, []);
+    }, []));
 
     const onSearch = (value) => {
         if (value.length == 0){
@@ -42,12 +54,17 @@ function ListEventScreen({route, navigation}) {
         }else{
             value = value.trim()
             const res = eventsFiltered.filter(e => {
-                console.log({name: e.name})
-                const t = e.name
+                let t = e.name
                     .toLowerCase()
-                    .includes(value.toLowerCase())
-                console.log(t, e.name)
-                return t;
+                    .includes(value.toLowerCase());
+                if (selectEdition == null){
+                    return t;
+                }
+                console.log({
+                    'eid': e.party.id,
+                    'edit': selectEdition.value
+                })
+                return t && e.party.id == selectEdition.value;
             });
             setEventsFiltered(res)
         }
