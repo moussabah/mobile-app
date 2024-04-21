@@ -19,6 +19,7 @@ import {Tag} from "../models/Tag";
 import tag from "../components/Tag";
 import {ne} from "@faker-js/faker";
 import CreatCourseDto from "../models/CreatCourseDto";
+import EventService from "../services/EventService";
 
 function CreateCourseScreen({navigation}) {
     const initialData = {
@@ -34,11 +35,20 @@ function CreateCourseScreen({navigation}) {
     const [courses, setCourses] = useState(initialData);
     const courseService = new CourseService();
     const courseValidator = new CourseValidator();
+    const eventService = new EventService();
 
     useFocusEffect(useCallback(() => {
         initData()
         return () => {}
     }, []));
+
+    useEffect(() => {
+        eventService.getAll().then((events) => {
+            setAvailableEvents(events);
+        }).catch(error => {
+            console.error("Error fetching events:", error);
+        });
+    }, []);
 
     const onSelectEvent = (value) => {
         setEventSelected(value);

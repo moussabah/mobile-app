@@ -31,11 +31,13 @@ export default class EventService implements CrudInterface<Event>{
     }
 
     getAll(): Promise<Event[]>{
-        const fakers = new FakerService();
         return new Promise<Event[]>((resolve, reject) => {
-            setTimeout(() => {
-                resolve(fakers.getEvents(100));
-            }, 3000)
+            this.getAllWithPagination(0, 200)
+                .then(res => res.json())
+                .then(res => resolve(res.content))
+                .catch(error => {
+                    reject(error);
+                })
         })
     }
 

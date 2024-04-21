@@ -21,6 +21,8 @@ export default class Event {
     public tags: Tag[] = [];
     public geolocation?: Geolocation;
     public isPublished = false;
+    public longitude? = null;
+    public latitude? = null;
 
 
     format(eventData: any): Event {

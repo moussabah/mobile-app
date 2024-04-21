@@ -9,6 +9,8 @@ export const config =  {
         filterByCriteria: `${domain}/search/criteria`,
         getEventPagination: `${domain}/events/pagination?page={page}&size={size}&sort={sort}`,
         getCoursePagination: `${domain}/parcours/pagination?page={page}&size={size}&sort={sort}`,
-        createCourse: `${domain}/course/create`
+        createCourse: `${domain}/parcours`,
+        addEventsToParcour: `${domain}/parcours`,
+        listParty: `${domain}/partys`
     },
 }

@@ -1,13 +1,18 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, SafeAreaView, View, StyleSheet, TouchableOpacity} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import EditionComponent from "./EditionComponent";
+import PartyService from "../services/PartyService";
+import EventService from "../services/EventService";
 
 function EventListHeader({title, navigation}) {
 
+
+    const [partys, setEventListHeaders] = useState([]);
     const onPick = (value) => {
         navigation.navigate('')
     }
+
 
     const onPressAdd = () => {
         navigation.navigate("CreateEventScreen")
