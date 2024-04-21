@@ -36,6 +36,23 @@ function ListEventScreen({route, navigation}) {
             })
     }, []);
 
+    const onSearch = (value) => {
+        if (value.length == 0){
+            setEventsFiltered(events)
+        }else{
+            value = value.trim()
+            const res = eventsFiltered.filter(e => {
+                console.log({name: e.name})
+                const t = e.name
+                    .toLowerCase()
+                    .includes(value.toLowerCase())
+                console.log(t, e.name)
+                return t;
+            });
+            setEventsFiltered(res)
+        }
+    }
+
     function tagHandler(i, name) {
         setActiveTag(i)
         if (name ==  "Tout"){
@@ -71,7 +88,7 @@ function ListEventScreen({route, navigation}) {
 
     return (
         <View style={Styles.container}>
-            <TextInput style={{...Styles.input, ...eventStyles.input}} placeholder={"Recherche"}/>
+            <TextInput onChangeText={onSearch} style={{...Styles.input, ...eventStyles.input}} placeholder={"Recherche"}/>
             <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={eventStyles.tagContainer}>
                 {tagsItems()}
             </ScrollView>
