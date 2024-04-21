@@ -1,37 +1,27 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Styles} from "../assets/styles/Styles";
 import {Button, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
-import FilterService from "../services/FilterService";
-import Tag from "../components/Tag";
-import CourseCard from "../components/CourseCard";
-import CourseStorage from "../services/storages/CourseStorage";
-import styles from "./CSS/styles";
-import componentStyles from "./CSS/styles";
-import {useFocusEffect} from "@react-navigation/native";
+import CourseCard from "../components/CourseCard";;
 import CourseService from "../services/CourseService";
+import {useFocusEffect} from "@react-navigation/native";
 
 function ListCourseScreen({route, navigation}) {
     const [courses, setCourses] = useState([]);
     const courseService = new CourseService();
 
-    let page = 0, limit = 10;
+    let page = 0, limit = 50;
 
-    useEffect(() => {
+    useFocusEffect(useCallback( () => {
         courseService.getAllWithPagination(page, limit)
             .then(response => response.json())
             .then(res => {
                 setCourses(res.content);
+                console.log(courses.length)
             })
             .catch((error) => {
                 console.error('Error fetching parcours:', error);
             })
-    }, []);
-
-    /*useFocusEffect(useCallback(() => {
-       initData()
-        return () => {}
     }, []));
-    */
 
     const onNavigate = () => {
         navigation.navigate('CreateCourseScreen')

@@ -39,16 +39,13 @@ function CreateCourseScreen({navigation}) {
 
     useFocusEffect(useCallback(() => {
         initData()
-        return () => {}
-    }, []));
-
-    useEffect(() => {
         eventService.getAll().then((events) => {
             setAvailableEvents(events);
         }).catch(error => {
             console.error("Error fetching events:", error);
         });
-    }, []);
+        return () => {}
+    }, []));
 
     const onSelectEvent = (value) => {
         setEventSelected(value);
@@ -96,7 +93,8 @@ function CreateCourseScreen({navigation}) {
 
     const addEvents = async (courseId) => {
         try {
-            const eventIds = initialData.events.map(event => event.id);
+            const eventIds = courses.events.map(event => event.id);
+            console.log({eventIds})
             await courseService.addEventsToCourse(courseId, eventIds);
             console.log('Events associated with course successfully');
         } catch (error) {

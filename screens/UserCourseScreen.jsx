@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Colors} from "../assets/styles/Colors";
 import UserCourseCard from "../components/UserCourseCard";
 import CourseStorage from "../services/storages/CourseStorage";
+import {useFocusEffect} from "@react-navigation/native";
 
 function UserCourseScreen({navigation}) {
 
@@ -14,7 +15,12 @@ function UserCourseScreen({navigation}) {
             .then(courses => setCourses(courses))
     }
 
-    initData()
+
+    useFocusEffect(useCallback(() => {
+        initData()
+        console.log(courses.length)
+        return () => {}
+    }), [])
 
     function CourseItem() {
         return (
