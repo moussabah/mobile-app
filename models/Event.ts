@@ -29,7 +29,7 @@ export default class Event {
         this.rate = eventData.rate ?? 0;
         this.email = eventData.email ?? null;
         this.dateEnd = eventData.dateEnd ?? null;
-        this.dateBegin = eventData.dateCreation ?? null;
+        this.dateBegin = eventData.dateInit ?? null;
         this.isFree = eventData.isFree ?? null;
         this.price = eventData.amount ?? null;
         this.description = eventData.description ?? null;

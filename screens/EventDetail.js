@@ -18,16 +18,16 @@ function EventDetail({route, navigation}) {
     return (
         <View style={styles.body}>
             <View style={styles.image}>
-                <Image resizeMode={"contain"} source={{uri: event.image}} height={250}/>
+                <Image resizeMode={"contain"} source={{uri: event.getImage()}} height={250}/>
             </View>
             <Rating value={rate} onPress={(value) => onRate(value)} />
-            <Text style={styles.rate}>({rate}/5)</Text>
+            <Text style={styles.rate}>({event.rate}/5)</Text>
             <View>
-                <Text style={styles.title}>{event.titre_fr}</Text>
-                <Text style={styles.date}>{event.resume_horaires_fr}</Text>
+                <Text style={styles.title}>{event.name}</Text>
+                <Text style={styles.date}>{event.dateBegin}</Text>
             </View>
             <View style={styles.description}>
-                <HtmlView value={event.description_longue_html_fr} />
+                <HtmlView value={event.description} />
             </View>
         </View>
     );

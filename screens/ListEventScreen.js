@@ -25,6 +25,7 @@ function ListEventScreen({route, navigation}) {
             .then(response => response.json())
             .then(res => {
                 setEvents(res.content);
+                console.log(res.content)
             })
             .catch((error) => {
                 console.error('Error fetching events:', error);
@@ -41,7 +42,7 @@ function ListEventScreen({route, navigation}) {
             tagsItems.push(<Tag name={tags[i]} key={i} active={activeTag === i} onPress={() => tagHandler(i)}/>)
         }
         return tagsItems;
-    }
+    };
 
 
     return (
