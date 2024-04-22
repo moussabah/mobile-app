@@ -14,7 +14,7 @@ function MapViewScreen({navigation}) {
             .then(events => {
                 setEvents(events);
             })
-    }, [events]);
+    }, []);
 
     function getMarkers(){
         const markets = [];
@@ -23,8 +23,8 @@ function MapViewScreen({navigation}) {
                 <Marker
                     key={i}
                     coordinate={{
-                        latitude: events[i].geolocation.latitude,
-                        longitude: events[i].geolocation.longitude,
+                        latitude: Number.parseFloat(events[i].latitude),
+                        longitude: Number.parseFloat(events[i].latitude),
                     }}
                     title={events[i].name}
                     description={events[i].description}

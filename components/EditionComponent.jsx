@@ -1,19 +1,32 @@
 import React, {useEffect, useMemo, useState,} from 'react';
 import {Picker} from "@react-native-picker/picker";
 import {View, StyleSheet} from "react-native";
-import FakerService from "../services/FakerService";
+import PartyService from "../services/PartyService";
+import Party from "../models/Party";
+import PartyStorage from "../services/storages/PartyStorage";
 
 function EditionComponent(props) {
     const {onPick, style} = props;
-    const fakerService = new FakerService();
     const [value, setValue] = useState(null);
+    const partyService = new PartyService();
+    const [editions, setEditions] = useState([]);
+    const partyStorage = new PartyStorage();
 
-    const editions = useMemo(() => {
-        return fakerService.getEditions();
-    }, [])
+    useEffect(() => {
+        partyService.getAll()
+            .then(response => response.json())
+            .then(res => {
+                console.log({res})
+                const t = (new Party()).toArray(res);
+                setEditions(t)
+            })
+            .catch((error) => {
+                console.error('Error fetching partys:', error);
+            })
+    }, []);
 
     const onSelect = (value) => {
-        onPick(value)
+        partyStorage.add(value);
         setValue(value)
     }
 

@@ -17,6 +17,9 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import {assertSourceType, msg} from "@babel/core/lib/config/validation/option-assertions";
 import {Tag} from "../models/Tag";
 import tag from "../components/Tag";
+import {ne} from "@faker-js/faker";
+import CreatCourseDto from "../models/CreatCourseDto";
+import EventService from "../services/EventService";
 
 function CreateCourseScreen({navigation}) {
     const initialData = {
@@ -32,9 +35,15 @@ function CreateCourseScreen({navigation}) {
     const [courses, setCourses] = useState(initialData);
     const courseService = new CourseService();
     const courseValidator = new CourseValidator();
+    const eventService = new EventService();
 
     useFocusEffect(useCallback(() => {
         initData()
+        eventService.getAll().then((events) => {
+            setAvailableEvents(events);
+        }).catch(error => {
+            console.error("Error fetching events:", error);
+        });
         return () => {}
     }, []));
 
@@ -75,8 +84,22 @@ function CreateCourseScreen({navigation}) {
             alert(error)
             return
         }
-        await courseService.create(courses);
+        let c = new CreatCourseDto();
+        const createdCourse = await courseService.create( c.format(courses));
+
+        await addEvents(createdCourse.id);
         navigation.navigate('CourseList');
+    }
+
+    const addEvents = async (courseId) => {
+        try {
+            const eventIds = courses.events.map(event => event.id);
+            console.log({eventIds})
+            await courseService.addEventsToCourse(courseId, eventIds);
+            console.log('Events associated with course successfully');
+        } catch (error) {
+            console.error('Error associating events with course', error);
+        }
     }
 
 

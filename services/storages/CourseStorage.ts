@@ -46,4 +46,16 @@ export default class CourseStorage implements StorageService<Course>{
         });
     }
 
+    async getLastId(): Promise<string|number> {
+        const courses = await this.getAll();
+        if (courses.length == 0){
+            return 1;
+        }
+        const lastId = courses[courses.length-1]!.id!;
+        if (typeof lastId == "string"){
+            return lastId+"1";
+        }
+        return lastId+1;
+    }
+
 }
